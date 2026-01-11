@@ -1,223 +1,168 @@
-<!DOCTYPE html><html lang="en"><head><meta name="x-poe-datastore-behavior" content="local_only"><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>K-Fun Quiz 🇰🇷✨ — Korean for Hong Kong Students!</title>
-  <style>
-    body {
-      font-family: "Comic Sans MS", "Noto Sans KR", sans-serif;
-      background: linear-gradient(135deg, #ffe4e1, #fff9c4);
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      color: #333;
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇰🇷 HanStyle Quiz | Inline Romanization & Sound</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&family=Gowun+Batang&display=swap" rel="stylesheet">
+<style>
+body {
+  margin: 0;
+  background-color: #f7f3ea;
+  color: #2a2a2a;
+  font-family: 'Gowun Batang','Noto Sans KR',serif;
+}
 
-    header {
-      background-color: #e91e63;
-      color: white;
-      padding: 1rem;
-      border-bottom: 5px solid #fdd835;
-    }
+/* ---- Header ---- */
+header {
+  background: linear-gradient(95deg,#cfa85b 0%,#f7f3ea 70%);
+  text-align: center;
+  border-bottom: 5px solid #e53a40;
+  padding: 2rem 1rem;
+}
+header h1 { color:#29549b;font-size:2rem;margin-bottom:.4rem;}
+header p { color:#4e3a2c;}
 
-    h1 {
-      margin: 0;
-      font-size: 1.8rem;
-    }
+/* ---- Quiz ---- */
+.quiz-card {
+  max-width:720px;margin:2rem auto;background:#fff;
+  border:3px double #cfa85b;border-radius:18px;
+  box-shadow:0 3px 14px rgba(0,0,0,.12);padding:2rem;
+}
+.question{font-size:1.3rem;font-weight:700;color:#29549b;}
+.options{margin-top:1rem;}
+.option{
+  background:#faf7f0;padding:0.7rem;border-radius:10px;
+  border:2px solid transparent;margin:0.4rem 0;cursor:pointer;
+  transition:all .25s;
+}
+.option:hover{border-color:#e53a40;background:#fff9f6;}
+.correct{background:#e6f5e4!important;border-color:#4e7b45!important;color:#204420!important;}
+.wrong{background:#fbe1e1!important;border-color:#e53a40!important;color:#802e2e!important;}
+.result{margin-top:1rem;}
+#nextBtn{
+  background:#29549b;color:white;border:none;padding:0.8rem 1.6rem;
+  border-radius:8px;margin-top:1.2rem;cursor:pointer;transition:background .3s;
+  font-weight:700;
+}
+#nextBtn:hover{background:#1e437f;}
+#scoreboard{margin-top:.6rem;font-size:1.1rem;color:#4e3a2c;}
+footer{text-align:center;margin:2rem 0;font-size:.9rem;color:#6a5541;}
 
-    .quiz-container {
-      max-width: 600px;
-      margin: 2rem auto;
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      padding: 2rem;
-    }
-
-    .question {
-      font-size: 1.25rem;
-      font-weight: bold;
-    }
-
-    .options {
-      margin-top: 1rem;
-      text-align: left;
-    }
-
-    .option {
-      background: #fce4ec;
-      margin: 0.5rem 0;
-      padding: 0.75rem;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .option:hover {
-      background: #f8bbd0;
-    }
-
-    .result {
-      margin-top: 1rem;
-      font-size: 1.1rem;
-      font-weight: bold;
-    }
-    
-    .correct { color: green; }
-    .wrong { color: red; }
-
-    button {
-      background-color: #ff4081;
-      color: white;
-      border: none;
-      padding: 0.7rem 1.5rem;
-      margin-top: 1.5rem;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    button:hover {
-      background-color: #e91e63;
-    }
-
-    footer {
-      margin-top: 2rem;
-      color: #555;
-      font-size: 0.9rem;
-    }
-  </style>
+/* ---- Korean word look ---- */
+.kword{
+  color:#e53a40;font-weight:700;cursor:pointer;
+  text-decoration:underline dotted #e53a40;
+  border-radius:4px;padding:0 4px;
+}
+.kword:hover{background:#fff0ec;color:#29549b;}
+.kroman{
+  font-size:0.95rem;color:#3c3c3c;font-family:'Noto Sans KR',sans-serif;
+}
+.icon{font-size:0.95rem;color:#29549b;}
+</style>
 </head>
 <body>
-
 <header>
-  <h1>🎉 K‑Fun Quiz 🇰🇷 — Korean for Hong Kong Students 🇭🇰</h1>
-  <p>Learn Korean one chuckle at a time! 😆✨</p>
+  <h1>🇰🇷 HanStyle Quiz</h1>
+  <p>Click Korean words <span class="icon">🔊</span> to listen — Hangul + romanization inline!</p>
 </header>
 
-<div class="quiz-container">
-  <div id="quiz">
-    <!-- Questions will appear here -->
-  </div>
-  <button id="nextBtn">Next Question ➡️</button>
+<div class="quiz-card">
+  <div id="quiz"></div>
+  <div id="scoreboard"></div>
+  <button id="nextBtn">다음 ➡️</button>
 </div>
 
-<footer>
-  <p>Made with 💖 by GPT — Korean edition 🎌</p>
-</footer>
+<footer>HanStyle Learning • 홍콩 x 한국 Friendship 🌸</footer>
+
+<audio id="sound-correct" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_ba6bdf8dd9.mp3?filename=wood-hit.mp3" preload="auto"></audio>
+<audio id="sound-wrong" src="https://cdn.pixabay.com/download/audio/2021/08/09/audio_9ed8c9561a.mp3?filename=error-126627.mp3" preload="auto"></audio>
 
 <script>
-  const quizData = [
-    {
-      question: "1️⃣ What does ‘안녕하세요 (annyeonghaseyo)’ mean?",
-      options: [
-        "A) Goodbye 👋",
-        "B) Hello 😊",
-        "C) Delicious 🍜",
-        "D) I’m tired 😴"
-      ],
-      answer: 1,
-      joke: "If you said 'Delicious', well… food DOES make people greet happily 😋"
-    },
-    {
-      question: "2️⃣ Which of these means ‘Thank you’ in Korean?",
-      options: [
-        "A) 감사해요 (gamsahaeyo) 🙏",
-        "B) 김치 (kimchi) 🥬",
-        "C) 사랑해요 (saranghaeyo) 💕",
-        "D) 서울 (Seoul) 🏙️"
-      ],
-      answer: 0,
-      joke: "Saying 'Kimchi' to thank someone? That’s spicy gratitude 🌶️😂"
-    },
-    {
-      question: "3️⃣ Hong Kong students sometimes say ‘사랑해요’ — what does it mean?",
-      options: [
-        "A) I love you 💖",
-        "B) Nice to meet you 🤝",
-        "C) I’m hungry 🍙",
-        "D) See you soon 👋"
-      ],
-      answer: 0,
-      joke: "If you said ‘I’m hungry’ — maybe love and food are the same for you 🍗❤️"
-    },
-    {
-      question: "4️⃣ What is ‘김치 (kimchi)’?",
-      options: [
-        "A) A spicy cabbage dish 🥬🔥",
-        "B) A K‑pop band 🎤",
-        "C) A cute cat name 🐱",
-        "D) A type of dance 💃"
-      ],
-      answer: 0,
-      joke: "Imagine a K‑pop group named Kimchi! 'Next on stage... Fermented Beats!' 🎶"
-    },
-    {
-      question: "5️⃣ What is the Korean word for ‘school’?",
-      options: [
-        "A) 친구 (chingu) – friend 👭",
-        "B) 학교 (hakgyo) – school 🏫",
-        "C) 선생님 (seonsaengnim) – teacher 👩‍🏫",
-        "D) 고양이 (goyangi) – cat 🐱"
-      ],
-      answer: 1,
-      joke: "If you go to the cat instead of school... well, that’s *purrfect truancy!* 😹"
-    }
-  ];
+// 🔈 Speak the Hangul
+function speakKorean(text){
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "ko-KR"; u.rate = 1.0;
+  speechSynthesis.speak(u);
+}
 
-  let currentQuestion = 0;
-  let score = 0;
+const quizData = [
+ {question:"‘<span class='kword' data-read='안녕하세요'>안녕하세요 <span class='kroman'>(annyeonghaseyo)</span> <span class='icon'>🔊</span></span>’ means?",
+  options:["Hello 🌞","Goodbye 👋","Excuse me 🙇","Snack time 🍡"],
+  answer:0,joke:"Polite and friendly — say it anytime!"},
+ {question:"‘<span class='kword' data-read='감사합니다'>감사합니다 <span class='kroman'>(gamsahamnida)</span> <span class='icon'>🔊</span></span>’ is used when…",
+  options:["Thanking someone 🙏","Apologizing 😔","Sneezing 🤧","Resting 😴"],
+  answer:0,joke:"Show gratitude — bow slightly and smile 🤲"},
+ {question:"‘<span class='kword' data-read='김치'>김치 <span class='kroman'>(kimchi)</span> <span class='icon'>🔊</span></span>’ refers to…",
+  options:["Spicy fermented vegetables 🌶️","A dance 💃","A drama 🎬","A noodle 🍜"],
+  answer:0,joke:"Fermented flavor that defines Korea 🥬"},
+ {question:"‘<span class='kword' data-read='학교'>학교 <span class='kroman'>(hakgyo)</span> <span class='icon'>🔊</span></span>’ means…",
+  options:["School 🏫","Friend 👭","House 🏠","Teacher 👩‍🏫"],
+  answer:0,joke:"Correct — learn Hangul at ‘Hakgyo’!"},
+ {question:"‘<span class='kword' data-read='사랑해요'>사랑해요 <span class='kroman'>(saranghaeyo)</span> <span class='icon'>🔊</span></span>’ is…",
+  options:["I love you 💕","Goodnight 🌙","Thank you 🙏","Be careful ✋"],
+  answer:0,joke:"Soft and emotional — a K‑drama classic 💞"},
+ {question:"‘<span class='kword' data-read='화이팅'>화이팅 <span class='kroman'>(hwaiting)</span> <span class='icon'>🔊</span></span>’ means…",
+  options:["Let’s go! 💪","Stop! ✋","Hungry! 🍙","Who are you? 🤔"],
+  answer:0,joke:"Same as HK ‘加油!’ — Korean energy word 🔥"}
+];
 
-  const quizEl = document.getElementById('quiz');
-  const nextBtn = document.getElementById('nextBtn');
+let index = 0, score = 0;
+const quizEl = document.getElementById('quiz');
+const nextBtn = document.getElementById('nextBtn');
+const scoreboard = document.getElementById('scoreboard');
+const sndC = document.getElementById('sound-correct');
+const sndW = document.getElementById('sound-wrong');
 
-  function loadQuestion() {
-    const q = quizData[currentQuestion];
-    quizEl.innerHTML = `
-      <div class="question">${q.question}</div>
-      <div class="options">
-        ${q.options.map((opt, i) => `<div class="option" data-index="${i}">${opt}</div>`).join('')}
-      </div>
-      <div class="result" id="result"></div>
-    `;
-    document.querySelectorAll('.option').forEach(opt => {
-      opt.addEventListener('click', selectOption);
-    });
+function loadQuestion(){
+  const q = quizData[index];
+  quizEl.innerHTML = `
+    <div class="question">${q.question}</div>
+    <div class="options">
+      ${q.options.map((o,i)=>`<div class="option" data-i="${i}">${o}</div>`).join('')}
+    </div>
+    <div class="result" id="result"></div>`;
+  scoreboard.textContent = `🌕 Score: ${score}/${quizData.length}`;
+  document.querySelectorAll('.option').forEach(o=>o.addEventListener('click',selectOption));
+  document.querySelectorAll('.kword').forEach(k=>k.addEventListener('click',()=>speakKorean(k.dataset.read)));
+}
+
+function selectOption(e){
+  const chosen = parseInt(e.target.getAttribute('data-i'));
+  const correct = quizData[index].answer;
+  const res = document.getElementById('result');
+  document.querySelectorAll('.option').forEach(o=>o.removeEventListener('click',selectOption));
+  if(chosen===correct){
+    e.target.classList.add('correct'); sndC.play(); score++;
+    res.textContent="✅ "+quizData[index].joke;
+  } else {
+    e.target.classList.add('wrong'); sndW.play();
+    res.innerHTML="❌ Correct: "+quizData[index].options[correct]+"<br>"+quizData[index].joke;
   }
+  scoreboard.textContent=`🌕 Score: ${score}/${quizData.length}`;
+}
 
-  function selectOption(e) {
-    const selectedIndex = parseInt(e.target.getAttribute('data-index'));
-    const correctIndex = quizData[currentQuestion].answer;
-    const resultEl = document.getElementById('result');
-    
-    if (selectedIndex === correctIndex) {
-      e.target.classList.add('correct');
-      resultEl.innerHTML = `✅ Correct! ${quizData[currentQuestion].joke}`;
-      score++;
-    } else {
-      e.target.classList.add('wrong');
-      resultEl.innerHTML = `❌ Oops! The right answer was: ${quizData[currentQuestion].options[correctIndex]} <br>${quizData[currentQuestion].joke}`;
-    }
-
-    document.querySelectorAll('.option').forEach(opt => opt.removeEventListener('click', selectOption));
+nextBtn.addEventListener('click',()=>{
+  index++;
+  if(index<quizData.length){loadQuestion();}
+  else{
+    quizEl.innerHTML=`<h2>수고했어요! 👏</h2>
+      <p>Score: ${score}/${quizData.length}</p>
+      <p>${ending(score)}</p>
+      <button onclick="restart()">🔁 Try Again</button>`;
+    nextBtn.style.display='none';
   }
+});
 
-  nextBtn.addEventListener('click', () => {
-    currentQuestion++;
-    if (currentQuestion < quizData.length) {
-      loadQuestion();
-    } else {
-      quizEl.innerHTML = `
-        <h2>🎉 Quiz Complete! 🎉</h2>
-        <p>You scored <strong>${score}</strong> out of ${quizData.length}</p>
-        <p>${score === quizData.length ? "🏆 Perfect! You’re a baby K‑pop genius!" : "Keep practicing — you're almost fluent… in humor 😂"}</p>
-      `;
-      nextBtn.style.display = 'none';
-    }
-  });
-
-  loadQuestion();
+function ending(s){
+  if(s===quizData.length)return"💮 완벽해요! Your pronunciation is wonderful!";
+  if(s>=quizData.length-1)return"🌿 Great! Keep repeating every day!";
+  if(s>=quizData.length/2)return"🍵 Nice progress — speak slowly and clearly.";
+  return"😅 Keep listening and reading aloud — 화이팅!";
+}
+function restart(){index=0;score=0;nextBtn.style.display='inline-block';loadQuestion();}
+loadQuestion();
 </script>
-
-
-
-</body></html>
+</body>
+</html>
