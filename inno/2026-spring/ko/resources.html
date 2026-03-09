@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>韓語學習資源中心 - 韓戀模擬器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700&family=Pretendard:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent-pink:    #FF9AB5;
+      --accent-mint:    #A8E6CF;
+      --bg-cream:       #FDFBF7;
+      --peach-light:    #FFE5D9;
+      --text-main:      #4A3C2F;
+      --text-sub:       #6B5E4E;
+      --success-blue:   #B2E4FF;
+      
+      --shadow-soft:    0 6px 20px rgba(74, 60, 47, 0.08);
+      --radius-large:   20px;
+      --radius-pill:    999px;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Pretendard', system-ui, sans-serif;
+      background: var(--bg-cream);
+      color: var(--text-main);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    nav {
+      background: linear-gradient(135deg, #FDFBF7 0%, #FFE5D9 100%);
+      padding: 1.5rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 10px rgba(74, 60, 47, 0.05);
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius-pill);
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+      background: var(--peach-light);
+      color: var(--accent-pink);
+    }
+
+    nav a.active {
+      background: var(--accent-pink);
+      color: white;
+    }
+
+    header {
+      background: linear-gradient(135deg, #FDFBF7 0%, #FFE5D9 100%);
+      padding: 5rem 2rem 3rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 3.4rem;
+      color: #E5739D;
+      margin-bottom: 0.6rem;
+    }
+
+    .tagline {
+      font-size: 1.4rem;
+      color: var(--text-sub);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .section-title {
+      font-family: 'Noto Serif KR', serif;
+      color: #E5739D;
+      font-size: 2.4rem;
+      margin: 3.5rem 0 1.5rem;
+      text-align: center;
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .resource-card {
+      background: white;
+      border-radius: var(--radius-large);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      padding: 0;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 36px rgba(74,60,47,0.12);
+    }
+
+    .resource-header {
+      background: var(--peach-light);
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .resource-header h3 {
+      font-family: 'Noto Serif KR', serif;
+      color: #E5739D;
+      font-size: 1.8rem;
+      margin: 0;
+    }
+
+    .resource-content {
+      padding: 1.8rem;
+    }
+
+    .resource-item {
+      margin-bottom: 1.5rem;
+      padding: 1.2rem;
+      background: var(--peach-light);
+      border-radius: 12px;
+    }
+
+    .resource-item h4 {
+      color: var(--accent-pink);
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .resource-item p {
+      color: var(--text-sub);
+      margin-bottom: 0.8rem;
+    }
+
+    .resource-link {
+      display: inline-block;
+      background: var(--accent-mint);
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius-pill);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .resource-link:hover {
+      background: #92d9bf;
+      transform: scale(1.03);
+    }
+
+    .video-embed {
+      margin: 1.5rem 0;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    iframe {
+      width: 100%;
+      height: 240px;
+      border: none;
+    }
+
+    .cta {
+      text-align: center;
+      margin: 4rem 0;
+    }
+
+    .cta-button {
+      background: var(--accent-pink);
+      color: white;
+      padding: 1.2rem 2.5rem;
+      font-size: 1.2rem;
+      border-radius: var(--radius-pill);
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(255,154,181,0.3);
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .cta-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(255,154,181,0.4);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: var(--text-sub);
+      font-size: 0.95rem;
+      border-top: 1px solid var(--peach-light);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2.6rem; }
+      .tagline { font-size: 1.25rem; }
+      nav ul { gap: 1.2rem; }
+      nav a { font-size: 1rem; padding: 0.5rem 1rem; }
+      iframe { height: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="https://codepen.io/beenotung/full/RNGbLKz">首頁</a></li>
+      <li><a href="https://codepen.io/beenotung/full/KwgPXWW">情境單字學習</a></li>
+      <li><a href="https://codepen.io/beenotung/full/raMBGyp" class="active">資源中心</a></li>
+      <li><a href="#">如何運作</a></li>
+      <li><a href="#">關於我們</a></li>
+      <li><a href="#">聯絡我們</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>韓語學習資源中心</h1>
+    <p class="tagline">精選適合香港學習者的韓語資源～從基礎發音到文化小知識，全部免費或易取得！專為粵語使用者設計，學得更快更開心～</p>
+  </header>
+
+  <div class="container">
+
+    <h2 class="section-title">📚 學習網站</h2>
+    <div class="resources-grid">
+
+      <div class="resource-card">
+        <div class="resource-header">
+          <h3>韓文數字 1-10 發音指南</h3>
+        </div>
+        <div class="resource-content">
+          <div class="resource-item">
+            <h4>Korean Numbers 1-10 Pronunciation Guide</h4>
+            <p>快速掌握韓語數字發音，適合初學者從零開始練習。包含韓文、羅馬拼音及粵語對比提示（若適用）。</p>
+            <a href="https://poe.com/preview/fblgQZlEYbZK5cTBzEmF" target="_blank" class="resource-link">立即查看 →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <h2 class="section-title">🎥 影片播放清單</h2>
+    <div class="resources-grid">
+
+      <div class="resource-card">
+        <div class="resource-header">
+          <h3>韓語學習系列（By Beeno）</h3>
+        </div>
+        <div class="resource-content">
+          <div class="resource-item">
+            <h4>Korean Learning Playlist</h4>
+            <p>由 Beeno 親自製作的初學者韓語課程，包括基礎單字、聽力練習、TOPIK I 詞彙表等。總共 3 支影片，適合香港學習者循序漸進。</p>
+            <a href="https://www.youtube.com/playlist?list=PLH2rXoLSgZYedXnlbf4_MzoDB0K2UQqex" target="_blank" class="resource-link">前往 YouTube 清單 →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <h2 class="section-title">🎬 短片推薦</h2>
+    <div class="resources-grid">
+
+      <div class="resource-card">
+        <div class="resource-header">
+          <h3>韓語 vs 廣東話 發音相似之處</h3>
+        </div>
+        <div class="resource-content">
+          <div class="resource-item">
+            <h4>Korean VS Cantonese, They have similar pronunciations</h4>
+            <p>超實用短片！展示韓語與廣東話因漢字詞源而發音相近的單字（如學生、圖書館、時間、運動等）。對香港粵語使用者來說，認得出這些詞會讓學韓語瞬間變簡單～</p>
+            <div class="video-embed">
+              <iframe src="https://www.youtube.com/embed/1qk7A6k3ey0" allowfullscreen></iframe>
+            </div>
+            <a href="https://www.youtube.com/shorts/1qk7A6k3ey0" target="_blank" class="resource-link">觀看短片 →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="cta">
+      <a href="https://codepen.io/beenotung/full/KwgPXWW" class="cta-button">回到情境單字學習 →</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>© 2026 K-Learn Hong Kong. 匯集優質韓語資源，讓香港朋友學韓語更輕鬆有趣。<br>By Beeno Tung - HKCT Innovation and Information Technology in Society.</p>
+  </footer>
+
+</body>
+</html>
