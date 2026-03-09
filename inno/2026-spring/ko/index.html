@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IoT韓語學習新體驗</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700&family=Pretendard:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent-pink:    #FF9AB5;     /* bright soft coral-pink */
+      --accent-mint:    #A8E6CF;     /* fresh mint */
+      --bg-cream:       #FDFBF7;     /* very light cream */
+      --peach-light:    #FFE5D9;     /* warm peach highlight */
+      --text-main:      #4A3C2F;     /* soft warm brown */
+      --text-sub:       #6B5E4E;     /* muted taupe */
+      --success-blue:   #B2E4FF;     /* bright light sky */
+      
+      --shadow-soft:    0 6px 20px rgba(74, 60, 47, 0.08);
+      --radius-large:   20px;
+      --radius-pill:    999px;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Pretendard', system-ui, sans-serif;
+      background: var(--bg-cream);
+      color: var(--text-main);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* Nav Menu Styles */
+    nav {
+      background: linear-gradient(135deg, #FDFBF7 0%, #FFE5D9 100%);
+      padding: 1.5rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 10px rgba(74, 60, 47, 0.05);
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      gap: 2.5rem;
+    }
+
+    nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius-pill);
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+      background: var(--peach-light);
+      color: var(--accent-pink);
+    }
+
+    nav a.active {
+      background: var(--accent-pink);
+      color: white;
+    }
+
+    /* Header / Hero Section */
+    header {
+      background: linear-gradient(135deg, #FDFBF7 0%, #FFE5D9 100%);
+      padding: 6rem 2rem 4rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 3.8rem;
+      color: #E5739D; /* brighter pink variant for title */
+      margin-bottom: 0.8rem;
+    }
+
+    .tagline {
+      font-size: 1.45rem;
+      color: var(--text-sub);
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: var(--radius-large);
+      padding: 2rem;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 36px rgba(74,60,47,0.12);
+    }
+
+    .feature-icon {
+      font-size: 2.5em;
+      margin-bottom: 1rem;
+      color: var(--accent-pink);
+    }
+
+    .feature-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.6rem;
+      color: var(--accent-pink);
+      margin-bottom: 0.8rem;
+    }
+
+    .feature-desc {
+      color: var(--text-sub);
+      font-size: 1.1rem;
+    }
+
+    /* App Showcase */
+    .app-showcase {
+      background: white;
+      border-radius: var(--radius-large);
+      padding: 2.5rem;
+      margin: 4rem 0;
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+    }
+
+    .app-mockup {
+      max-width: 300px;
+      margin: 2rem auto;
+      border-radius: 30px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      background: #fff;
+      padding: 1rem;
+    }
+
+    /* CTA */
+    .cta {
+      text-align: center;
+      margin: 4rem 0;
+    }
+
+    .cta-button {
+      background: var(--accent-pink);
+      color: white;
+      border: none;
+      padding: 1.2rem 2.5rem;
+      font-size: 1.2rem;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(255,154,181,0.3);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .cta-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(255,154,181,0.4);
+    }
+
+    /* Section Title */
+    .section-title {
+      font-family: 'Noto Serif KR', serif;
+      color: #E5739D;
+      font-size: 2.4rem;
+      margin: 4rem 0 1.5rem;
+      text-align: center;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--peach-light);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2.8rem; }
+      .tagline { font-size: 1.2rem; }
+      nav ul { gap: 1rem; flex-wrap: wrap; }
+      nav a { font-size: 1rem; padding: 0.5rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Menu -->
+  <nav>
+    <ul>
+      <li><a href="https://codepen.io/beenotung/full/RNGbLKz" class="active">首頁</a></li>
+      <li><a href="https://codepen.io/beenotung/full/KwgPXWW">情境單字學習</a></li>
+      <li><a href="https://codepen.io/beenotung/full/raMBGyp">資源中心</a></li>
+      <li><a href="#">如何運作</a></li> <!-- Placeholder for How It Works -->
+      <li><a href="#">關於我們</a></li> <!-- Placeholder for About -->
+      <li><a href="#">聯絡我們</a></li> <!-- Placeholder for Contact -->
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <header>
+    <h1>IoT韓語學習新體驗</h1>
+    <p class="tagline">當你的手機能「看見、聽見、感知」真實世界，學習不再局限於App內。透過位置、QR Code、NFC和AI語音，讓韓語學習融入日常生活！</p>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+
+    <!-- Features Section -->
+    <h2 class="section-title">核心功能</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📍</div>
+        <h3 class="feature-title">智慧位置感知</h3>
+        <p class="feature-desc">走進韓國餐廳，自動解鎖「點餐情境單字包」。漫步尖沙咀韓國街，推送歷史文化故事。學習與所在地深度連結。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📷</div>
+        <h3 class="feature-title">QR Code 實體擴增</h3>
+        <p class="feature-desc">掃描超市商品、餐廳海報上的專屬QR Code，即時學習詞彙、觀看教學短片。把整個城市變成你的韓語教室。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎤</div>
+        <h3 class="feature-title">AI 語音教練</h3>
+        <p class="feature-desc">跟讀例句，即時獲得發音評分與可視化反饋。支援語音指令，通勤時也能「動口不動手」持續學習。</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔗</div>
+        <h3 class="feature-title">NFC 魔法學習卡</h3>
+        <p class="feature-desc">輕觸實體單字卡，手機自動播放發音與例句。將數位內容賦予實體媒介，創造多感官學習體驗。</p>
+      </div>
+    </div>
+
+    <!-- Future Scenario Preview -->
+    <h2 class="section-title">未來學習場景預覽</h2>
+    <div class="app-showcase">
+      <p>你的手機，將成為連接韓語與現實生活的萬能鑰匙。</p>
+      <div class="app-mockup">
+        <!-- Placeholder for app screenshot; replace with actual image URL -->
+        <img src="https://via.placeholder.com/250x500?text=App+Preview" alt="App Mockup" style="width: 100%; border-radius: 20px;">
+      </div>
+      <p style="color: var(--text-sub); margin-top: 1rem;">想像一下：走進韓國燒烤店，手機自動推送相關詞彙和對話練習。</p>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="cta">
+      <a href="https://codepen.io/beenotung/full/KwgPXWW" class="cta-button">立即體驗</a>
+      <p style="margin-top: 1rem; color: var(--text-sub);">專為香港學習者設計 · 繁體中文介面</p>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 K-Learn Hong Kong. 將IoT科技融入語言學習，讓每一次相遇都成為練習機會。<br>By Beeno Tung - HKCT Innovation and Information Technology in Society.</p>
+  </footer>
+
+</body>
+</html>
