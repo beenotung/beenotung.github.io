@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>聯絡我們 - K-Learn Hong Kong</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700&family=Pretendard:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent-pink:    #FF9AB5;
+      --accent-mint:    #A8E6CF;
+      --bg-cream:       #FDFBF7;
+      --peach-light:    #FFE5D9;
+      --text-main:      #4A3C2F;
+      --text-sub:       #6B5E4E;
+      --success-blue:   #B2E4FF;
+      
+      --shadow-soft:    0 6px 20px rgba(74, 60, 47, 0.08);
+      --radius-large:   20px;
+      --radius-pill:    999px;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Pretendard', system-ui, sans-serif;
+      background: var(--bg-cream);
+      color: var(--text-main);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    nav {
+      background: linear-gradient(135deg, #FDFBF7 0%, #FFE5D9 100%);
+      padding: 1.5rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 10px rgba(74, 60, 47, 0.05);
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius-pill);
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+      background: var(--peach-light);
+      color: var(--accent-pink);
+    }
+
+    nav a.active {
+      background: var(--accent-pink);
+      color: white;
+    }
+
+    header {
+      background: linear-gradient(135deg, #FDFBF7 0%, #FFE5D9 100%);
+      padding: 5rem 2rem 3rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 3.4rem;
+      color: #E5739D;
+      margin-bottom: 0.6rem;
+    }
+
+    .tagline {
+      font-size: 1.4rem;
+      color: var(--text-sub);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .section-title {
+      font-family: 'Noto Serif KR', serif;
+      color: #E5739D;
+      font-size: 2.4rem;
+      margin: 3rem 0 2rem;
+      text-align: center;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .contact-card {
+      background: white;
+      padding: 2.5rem;
+      border-radius: var(--radius-large);
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-top: 5px solid var(--accent-pink);
+    }
+
+    .contact-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 36px rgba(74,60,47,0.12);
+    }
+
+    .contact-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.6rem;
+      color: #E5739D;
+      margin-bottom: 1rem;
+    }
+
+    .contact-info {
+      color: var(--text-sub);
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-link {
+      display: inline-block;
+      background: var(--accent-pink);
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: var(--radius-pill);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .contact-link:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(255,154,181,0.3);
+    }
+
+    .form-section {
+      background: white;
+      padding: 3rem;
+      border-radius: var(--radius-large);
+      box-shadow: var(--shadow-soft);
+      margin: 3rem 0;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.6rem;
+      font-size: 1.1rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--peach-light);
+      border-radius: 12px;
+      font-family: 'Pretendard', system-ui, sans-serif;
+      font-size: 1.1rem;
+      color: var(--text-main);
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--accent-pink);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 150px;
+    }
+
+    .submit-btn {
+      background: var(--accent-pink);
+      color: white;
+      padding: 1.2rem 3rem;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(255,154,181,0.3);
+      font-weight: 600;
+    }
+
+    .submit-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(255,154,181,0.4);
+    }
+
+    .faq-section {
+      margin: 4rem 0;
+    }
+
+    .faq-item {
+      background: white;
+      margin-bottom: 1.5rem;
+      border-radius: var(--radius-large);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .faq-question {
+      padding: 1.8rem;
+      background: var(--peach-light);
+      cursor: pointer;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #E5739D;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.3s ease;
+    }
+
+    .faq-question:hover {
+      background: #FFD7C5;
+    }
+
+    .faq-answer {
+      padding: 1.5rem 1.8rem;
+      color: var(--text-sub);
+      font-size: 1.1rem;
+      display: none;
+      line-height: 1.8;
+    }
+
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+
+    .faq-toggle {
+      font-size: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.active .faq-toggle {
+      transform: rotate(180deg);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: var(--text-sub);
+      font-size: 0.95rem;
+      border-top: 1px solid var(--peach-light);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2.8rem; }
+      .tagline { font-size: 1.2rem; }
+      nav ul { gap: 1rem; flex-wrap: wrap; }
+      nav a { font-size: 1rem; padding: 0.5rem 1rem; }
+      .section-title { font-size: 2rem; }
+      .form-section { padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">首頁</a></li>
+      <li><a href="vocab.html">情境單字學習</a></li>
+      <li><a href="resources.html">資源中心</a></li>
+      <li><a href="how-it-works.html">如何運作</a></li>
+      <li><a href="about-us.html">關於我們</a></li>
+      <li><a href="contact-us.html" class="active">聯絡我們</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>聯絡我們</h1>
+    <p class="tagline">有任何問題或建議？我們很樂意聽取你的意見！</p>
+  </header>
+
+  <div class="container">
+
+    <h2 class="section-title">聯繫方式</h2>
+    <div class="contact-grid">
+
+      <div class="contact-card">
+        <div class="contact-icon">📧</div>
+        <h3 class="contact-title">電郵</h3>
+        <p class="contact-info">有任何詢問？直接發送電郵給我們</p>
+        <a href="mailto:hello@klearners.hk" class="contact-link">發送電郵</a>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-icon">💬</div>
+        <h3 class="contact-title">社交媒體</h3>
+        <p class="contact-info">在 Instagram 或 Facebook 上與我們聯繫</p>
+        <a href="https://www.instagram.com/klearners.hk" target="_blank" class="contact-link">跟隨我們</a>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-icon">📍</div>
+        <h3 class="contact-title">位置</h3>
+        <p class="contact-info">香港<br>HKCT Innovation Hub</p>
+        <a href="https://maps.google.com" target="_blank" class="contact-link">查看地圖</a>
+      </div>
+
+    </div>
+
+    <h2 class="section-title">直接留言給我們</h2>
+    <div class="form-section">
+      <form onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label for="name">姓名 *</label>
+          <input type="text" id="name" name="name" required placeholder="請輸入你的姓名">
+        </div>
+
+        <div class="form-group">
+          <label for="email">電郵 *</label>
+          <input type="email" id="email" name="email" required placeholder="請輸入你的電郵地址">
+        </div>
+
+        <div class="form-group">
+          <label for="subject">主題 *</label>
+          <input type="text" id="subject" name="subject" required placeholder="例如：產品反饋、合作機會、技術支援">
+        </div>
+
+        <div class="form-group">
+          <label for="message">訊息 *</label>
+          <textarea id="message" name="message" required placeholder="請詳細說明你的訊息..."></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">發送訊息 →</button>
+      </form>
+    </div>
+
+    <h2 class="section-title">常見問題</h2>
+    <div class="faq-section">
+
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <div class="faq-question">
+          <span>K-Learn 是否免費使用？</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          K-Learn 的基本功能是免費的。我們提供免費的位置感知學習和基礎 QR Code 掃描功能。高級功能如 AI 語音評估和完整的 NFC 學習卡系列將在未來推出付費選項。
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <div class="faq-question">
+          <span>我需要一部特定的手機才能使用 K-Learn 嗎？</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          K-Learn 適用於 iOS 和 Android 設備。任何具有 GPS、攝像頭和 NFC 功能（對於完整體驗）的現代智能手機都可以使用。我們致力於確保應用程式在各種設備上都能流暢運行。
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <div class="faq-question">
+          <span>我的數據和隱私是否安全？</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          是的，我們非常重視用戶隱私。所有個人數據都根據香港個人資料保護條例進行加密和保護。我們不會與第三方分享你的學習數據，除非你明確同意。
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <div class="faq-question">
+          <span>K-Learn 是否支援其他語言？</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          目前，K-Learn 重點關注韓語學習。但我們計劃在未來擴展到其他亞洲語言。如果你有興趣看到特定語言的支持，請讓我們知道！
+        </div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFAQ(this)">
+        <div class="faq-question">
+          <span>我如何可以成為 K-Learn 的貢獻者或合作夥伴？</span>
+          <span class="faq-toggle">▼</span>
+        </div>
+        <div class="faq-answer">
+          我們歡迎合作夥伴、教師、設計師和開發者的合作。如果你有興趣與我們合作，請透過電郵或社交媒體與我們聯繫。我們很樂意探索合作的可能性！
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer>
+    <p>© 2026 K-Learn Hong Kong. 將IoT科技融入語言學習，讓每一次相遇都成為練習機會。<br>By Beeno Tung - HKCT Innovation and Information Technology in Society.</p>
+  </footer>
+
+  <script>
+    function toggleFAQ(element) {
+      element.classList.toggle('active');
+    }
+
+    function handleSubmit(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value;
+      
+      // Create mailto link
+      const mailtoLink = `mailto:hello@klearners.hk?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`姓名: ${name}\n電郵: ${email}\n\n訊息:\n${message}`)}`;
+      
+      window.location.href = mailtoLink;
+    }
+  </script>
+
+</body>
+</html>

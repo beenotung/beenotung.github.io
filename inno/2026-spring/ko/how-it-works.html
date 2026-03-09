@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>如何運作 - IoT韓語學習</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700&family=Pretendard:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent-pink:    #FF9AB5;
+      --accent-mint:    #A8E6CF;
+      --bg-cream:       #FDFBF7;
+      --peach-light:    #FFE5D9;
+      --text-main:      #4A3C2F;
+      --text-sub:       #6B5E4E;
+      --success-blue:   #B2E4FF;
+      
+      --shadow-soft:    0 6px 20px rgba(74, 60, 47, 0.08);
+      --radius-large:   20px;
+      --radius-pill:    999px;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Pretendard', system-ui, sans-serif;
+      background: var(--bg-cream);
+      color: var(--text-main);
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    nav {
+      background: linear-gradient(135deg, #FDFBF7 0%, #FFE5D9 100%);
+      padding: 1.5rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 10px rgba(74, 60, 47, 0.05);
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius-pill);
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+      background: var(--peach-light);
+      color: var(--accent-pink);
+    }
+
+    nav a.active {
+      background: var(--accent-pink);
+      color: white;
+    }
+
+    header {
+      background: linear-gradient(135deg, #FDFBF7 0%, #FFE5D9 100%);
+      padding: 5rem 2rem 3rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 3.4rem;
+      color: #E5739D;
+      margin-bottom: 0.6rem;
+    }
+
+    .tagline {
+      font-size: 1.4rem;
+      color: var(--text-sub);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .section-title {
+      font-family: 'Noto Serif KR', serif;
+      color: #E5739D;
+      font-size: 2.4rem;
+      margin: 3rem 0 2rem;
+      text-align: center;
+    }
+
+    .step-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .step-card {
+      background: white;
+      border-radius: var(--radius-large);
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-left: 5px solid var(--accent-pink);
+    }
+
+    .step-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 36px rgba(74,60,47,0.12);
+    }
+
+    .step-number {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 2.8rem;
+      color: var(--accent-pink);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.6rem;
+      color: #E5739D;
+      margin-bottom: 1rem;
+    }
+
+    .step-desc {
+      color: var(--text-sub);
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+
+    .tech-card {
+      background: white;
+      padding: 2rem;
+      border-radius: var(--radius-large);
+      box-shadow: var(--shadow-soft);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .tech-card:hover {
+      transform: scale(1.05);
+    }
+
+    .tech-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .tech-name {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.4rem;
+      color: var(--accent-pink);
+      margin-bottom: 0.8rem;
+    }
+
+    .tech-desc {
+      color: var(--text-sub);
+      font-size: 1rem;
+    }
+
+    .cta {
+      text-align: center;
+      margin: 4rem 0;
+    }
+
+    .cta-button {
+      background: var(--accent-pink);
+      color: white;
+      border: none;
+      padding: 1.2rem 2.5rem;
+      font-size: 1.2rem;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(255,154,181,0.3);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .cta-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(255,154,181,0.4);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: var(--text-sub);
+      font-size: 0.95rem;
+      border-top: 1px solid var(--peach-light);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2.8rem; }
+      .tagline { font-size: 1.2rem; }
+      nav ul { gap: 1rem; flex-wrap: wrap; }
+      nav a { font-size: 1rem; padding: 0.5rem 1rem; }
+      .section-title { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">首頁</a></li>
+      <li><a href="vocab.html">情境單字學習</a></li>
+      <li><a href="resources.html">資源中心</a></li>
+      <li><a href="how-it-works.html" class="active">如何運作</a></li>
+      <li><a href="about-us.html">關於我們</a></li>
+      <li><a href="contact-us.html">聯絡我們</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>如何運作</h1>
+    <p class="tagline">透過位置、QR Code、NFC 和 AI 語音技術，讓韓語學習融入你的日常生活。</p>
+  </header>
+
+  <div class="container">
+
+    <h2 class="section-title">5 個簡單步驟</h2>
+    <div class="step-container">
+
+      <div class="step-card">
+        <div class="step-number">1️⃣</div>
+        <h3 class="step-title">下載應用程式</h3>
+        <p class="step-desc">在你的手機上下載 K-Learn 應用程式，創建帳戶並設定語言偏好。支援繁體中文介面。</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">2️⃣</div>
+        <h3 class="step-title">開啟位置權限</h3>
+        <p class="step-desc">允許應用程式存取你的位置資訊，這樣它就能根據你所在的地點自動推送相關的學習內容和情境詞彙。</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">3️⃣</div>
+        <h3 class="step-title">探索周圍環境</h3>
+        <p class="step-desc">走進韓國餐廳、超市或觀光景點，應用程式會自動解鎖該地點的特色詞彙包和學習內容。</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">4️⃣</div>
+        <h3 class="step-title">掃描 QR Code 或 NFC 標籤</h3>
+        <p class="step-desc">掃描超市商品、餐廳海報或我們提供的學習卡上的 QR Code 或輕觸 NFC 標籤，立即開始互動式學習。</p>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">5️⃣</div>
+        <h3 class="step-title">練習發音並獲得反饋</h3>
+        <p class="step-desc">使用 AI 語音教練功能，跟讀例句並獲得即時發音評分和可視化反饋，持續改進你的韓語發音。</p>
+      </div>
+
+    </div>
+
+    <h2 class="section-title">核心技術</h2>
+    <div class="feature-grid">
+
+      <div class="tech-card">
+        <div class="tech-icon">📍</div>
+        <h3 class="tech-name">GPS 位置感知</h3>
+        <p class="tech-desc">系統根據你的實時位置推送相關的韓語詞彙和文化知識，讓學習與探索完美結合。</p>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-icon">📷</div>
+        <h3 class="tech-name">QR Code 掃描</h3>
+        <p class="tech-desc">用手機攝像頭掃描 QR Code，快速訪問視頻教程、音頻發音和互動式練習。</p>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-icon">💳</div>
+        <h3 class="tech-name">NFC 技術</h3>
+        <p class="tech-desc">輕觸帶有 NFC 芯片的學習卡，自動播放發音和例句，創造多感官學習體驗。</p>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-icon">🎤</div>
+        <h3 class="tech-name">AI 語音分析</h3>
+        <p class="tech-desc">先進的機器學習算法實時評估你的發音，提供詳細的改進建議和進度追蹤。</p>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-icon">🧠</div>
+        <h3 class="tech-name">個性化學習路徑</h3>
+        <p class="tech-desc">系統根據你的學習進度和興趣，自動調整內容難度和推薦教材。</p>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-icon">🏆</div>
+        <h3 class="tech-name">遊戲化成就系統</h3>
+        <p class="tech-desc">解鎖地點成就、完成挑戰並獲得徽章，讓學習變得更有趣和具有競爭性。</p>
+      </div>
+
+    </div>
+
+    <h2 class="section-title">為什麼選擇 K-Learn？</h2>
+    <div class="step-container">
+
+      <div class="step-card">
+        <h3 class="step-title">✨ 實體融合數位</h3>
+        <p class="step-desc">不只是一個 App，而是一個完整的學習生態系統，將你的物理環境轉變成互動式韓語教室。</p>
+      </div>
+
+      <div class="step-card">
+        <h3 class="step-title">🎯 針對性設計</h3>
+        <p class="step-desc">專為香港和粵語使用者設計，內容涵蓋粵韓發音相似之處，加快學習速度。</p>
+      </div>
+
+      <div class="step-card">
+        <h3 class="step-title">🚀 隨處隨時學習</h3>
+        <p class="step-desc">無論你在哪裡，都能利用周圍環境進行沉浸式學習，讓韓語融入日常生活的每一刻。</p>
+      </div>
+
+    </div>
+
+    <div class="cta">
+      <a href="vocab.html" class="cta-button">開始學習 →</a>
+      <p style="margin-top: 1rem; color: var(--text-sub);">準備好探索韓語的新世界了嗎？</p>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>© 2026 K-Learn Hong Kong. 將IoT科技融入語言學習，讓每一次相遇都成為練習機會。<br>By Beeno Tung - HKCT Innovation and Information Technology in Society.</p>
+  </footer>
+
+</body>
+</html>
