@@ -20,6 +20,10 @@
     th,td{padding:12px 14px;border-bottom:1px solid #ffe4ed;text-align:left}
     th{background:#fff0f4;color:var(--primary);font-weight:600}
     .small{color:#5c3f4e;font-size:0.95rem}
+    /* Chart layout helpers to prevent page reflow */
+    .chart-row{display:flex;gap:24px;flex-wrap:wrap;align-items:stretch}
+    .chart-wrap{flex:1;min-width:280px;height:360px;position:relative}
+    .chart-wrap canvas{width:100% !important;height:100% !important;display:block}
   </style>
 </head>
 <body>
@@ -54,15 +58,15 @@
         </tbody>
       </table>
       <p id="stats-desc" class="small">數據說明：`private_tutoring` — No = 沒有私人補習，Yes = 有私人補習。表格與圖表顯示每組的及格（Pass）與不及格（Fail）計數。</p>
-        <div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:28px;align-items:flex-start">
-          <div style="flex:1;min-width:300px">
-            <canvas id="donutLeft" aria-label="Tutoring main level, breakdown by Pass/Fail" role="img" style="height:320px;"></canvas>
-            <div class="small" style="text-align:center;margin-top:8px">左圖：主要分群為「是否有私人補習」，內圈顯示各群總數，外圈顯示該群的及格／不及格細項。</div>
+        <div class="chart-row" style="margin-top:28px;">
+          <div class="chart-wrap">
+            <canvas id="donutLeft" aria-label="Tutoring main level, breakdown by Pass/Fail" role="img"></canvas>
+            <div class="small" style="text-align:center;margin-top:8px">左圖：主要分群為「是否有私人補習」。內圈 = 群組總數；外圈 = 該群的及格（Pass）/ 不及格（Fail）分佈。</div>
           </div>
 
-          <div style="flex:1;min-width:300px">
-            <canvas id="donutRight" aria-label="Pass/Fail main level, breakdown by Tutoring" role="img" style="height:320px;"></canvas>
-            <div class="small" style="text-align:center;margin-top:8px">右圖：主要分群為「是否及格（Pass / Fail）」，內圈顯示各群總數，外圈顯示該群的補習有無細項。</div>
+          <div class="chart-wrap">
+            <canvas id="donutRight" aria-label="Pass/Fail main level, breakdown by Tutoring" role="img"></canvas>
+            <div class="small" style="text-align:center;margin-top:8px">右圖：主要分群為「學習結果（Pass / Fail）」。內圈 = 結果總數；外圈 = 該結果的私人補習（有 / 沒有）分佈。</div>
           </div>
         </div>
 
