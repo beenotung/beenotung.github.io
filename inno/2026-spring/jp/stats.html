@@ -54,78 +54,67 @@
         </tbody>
       </table>
       <p id="stats-desc" class="small">數據說明：`private_tutoring` — No = 沒有私人補習，Yes = 有私人補習。表格與圖表顯示每組的及格（Pass）與不及格（Fail）計數。</p>
-        <div style="margin-top:28px">
-          <canvas id="statsChart" aria-label="Pass and Fail counts by private tutoring" role="img" style="height:320px;"></canvas>
-        </div>
+        <div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:28px;align-items:flex-start">
+          <div style="flex:1;min-width:300px">
+            <canvas id="donutLeft" aria-label="Tutoring main level, breakdown by Pass/Fail" role="img" style="height:320px;"></canvas>
+            <div class="small" style="text-align:center;margin-top:8px">左圖：主要分群為「是否有私人補習」，內圈顯示各群總數，外圈顯示該群的及格／不及格細項。</div>
+          </div>
 
-        <div style="margin-top:28px">
-          <canvas id="nestedDonut" aria-label="Nested donut showing totals by tutoring and breakdown by pass/fail" role="img" style="height:360px;"></canvas>
+          <div style="flex:1;min-width:300px">
+            <canvas id="donutRight" aria-label="Pass/Fail main level, breakdown by Tutoring" role="img" style="height:320px;"></canvas>
+            <div class="small" style="text-align:center;margin-top:8px">右圖：主要分群為「是否及格（Pass / Fail）」，內圈顯示各群總數，外圈顯示該群的補習有無細項。</div>
+          </div>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
           (function(){
-            // Bar chart (existing)
-            const ctx = document.getElementById('statsChart').getContext('2d');
-            const barData = {
-              labels: ['No tutoring','With tutoring'],
-              datasets: [
-                { label: 'Pass', data: [6214, 4631], backgroundColor: '#ffb3c6' },
-                { label: 'Fail', data: [8331, 828], backgroundColor: '#f06292' }
-              ]
-            };
-            new Chart(ctx, {
-              type: 'bar',
-              data: barData,
-              options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { position: 'top' } },
-                scales: { x: { stacked: false }, y: { beginAtZero: true, ticks: { precision:0 } } }
-              }
-            });
+            // Data values
+            const noPass = 6214;
+            const noFail = 8331;
+            const yesPass = 4631;
+            const yesFail = 828;
 
-            // Nested donut chart (inner = tutoring totals, outer = pass/fail breakdown)
-            const donutCtx = document.getElementById('nestedDonut').getContext('2d');
-            const innerTotals = [6214 + 8331, 4631 + 828]; // No tutoring total, With tutoring total
-            const outerBreakdown = [6214, 8331, 4631, 828]; // No-Pass, No-Fail, Yes-Pass, Yes-Fail
+            // LEFT chart: Top level = Tutoring (No / Yes)
+            // inner: totals by tutoring; outer: Pass/Fail within each tutoring group
+            const leftCtx = document.getElementById('donutLeft').getContext('2d');
+            const leftInner = [noPass + noFail, yesPass + yesFail]; // [No tutoring total, With tutoring total]
+            const leftOuter = [noPass, noFail, yesPass, yesFail]; // [No:Pass, No:Fail, Yes:Pass, Yes:Fail]
 
-            new Chart(donutCtx, {
+            new Chart(leftCtx, {
               type: 'doughnut',
               data: {
                 labels: ['No tutoring','With tutoring','No: Pass','No: Fail','With: Pass','With: Fail'],
                 datasets: [
-                  {
-                    label: 'Totals',
-                    data: innerTotals,
-                    backgroundColor: ['#ffd7de','#ffd1e0'],
-                    // draw as inner ring
-                    circumference: 360,
-                    weight: 1
-                  },
-                  {
-                    label: 'Breakdown',
-                    data: outerBreakdown,
-                    backgroundColor: ['#ffb3c6','#f06292','#ffb3e0','#ff93b7'],
-                    // outer ring
-                    weight: 0.5
-                  }
+                  { data: leftInner, backgroundColor: ['#ffd7de','#ffd1e0'], label: 'Tutoring totals' },
+                  { data: leftOuter, backgroundColor: ['#ffb3c6','#f06292','#ffb3e0','#ff93b7'], label: 'Breakdown by Pass/Fail' }
                 ]
               },
               options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                  legend: { position: 'bottom' },
-                  tooltip: {
-                    callbacks: {
-                      label: function(ctx) {
-                        const label = ctx.dataset.label || '';
-                        return label + ': ' + ctx.formattedValue.toString();
-                      }
-                    }
-                  }
-                },
+                responsive:true, maintainAspectRatio:false,
+                plugins:{ legend:{ position:'bottom' }, tooltip:{ callbacks:{ label:function(ctx){ return ctx.label + ': ' + ctx.formattedValue; } } } },
+                cutout: '50%'
+              }
+            });
+
+            // RIGHT chart: Top level = Pass/Fail
+            // inner: totals by pass/fail; outer: With/No tutoring within each pass/fail group
+            const rightCtx = document.getElementById('donutRight').getContext('2d');
+            const rightInner = [noPass + yesPass, noFail + yesFail]; // [Pass total, Fail total]
+            const rightOuter = [yesPass, noPass, yesFail, noFail]; // [Pass:With, Pass:No, Fail:With, Fail:No]
+
+            new Chart(rightCtx, {
+              type: 'doughnut',
+              data: {
+                labels: ['Pass','Fail','Pass: With tutoring','Pass: No tutoring','Fail: With tutoring','Fail: No tutoring'],
+                datasets: [
+                  { data: rightInner, backgroundColor: ['#c7ffd9','#ffd7de'], label: 'Outcome totals' },
+                  { data: rightOuter, backgroundColor: ['#ffb3e0','#ffb3c6','#ff93b7','#f06292'], label: 'Breakdown by Tutoring' }
+                ]
+              },
+              options: {
+                responsive:true, maintainAspectRatio:false,
+                plugins:{ legend:{ position:'bottom' }, tooltip:{ callbacks:{ label:function(ctx){ return ctx.label + ': ' + ctx.formattedValue; } } } },
                 cutout: '50%'
               }
             });
