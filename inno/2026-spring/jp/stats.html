@@ -23,12 +23,13 @@
   </style>
 </head>
 <body>
-  <nav>
+    <nav>
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="focus-forest.html">Focus Forest</a></li>
       <li><a href="story-mode.html">Story Mode</a></li>
       <li><a href="vocabulary-trainer.html">Vocabulary Trainer</a></li>
+      <li><a href="stats.html" class="active">Stats</a></li>
       <li><a href="library.html">Library</a></li>
     </ul>
   </nav>
@@ -54,13 +55,19 @@
       </table>
       <p id="stats-desc" class="small">數據說明：`private_tutoring` — No = 沒有私人補習，Yes = 有私人補習。表格與圖表顯示每組的及格（Pass）與不及格（Fail）計數。</p>
         <div style="margin-top:28px">
-          <canvas id="statsChart" aria-label="Pass and Fail counts by private tutoring" role="img"></canvas>
+          <canvas id="statsChart" aria-label="Pass and Fail counts by private tutoring" role="img" style="height:320px;"></canvas>
         </div>
+
+        <div style="margin-top:28px">
+          <canvas id="nestedDonut" aria-label="Nested donut showing totals by tutoring and breakdown by pass/fail" role="img" style="height:360px;"></canvas>
+        </div>
+
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
           (function(){
+            // Bar chart (existing)
             const ctx = document.getElementById('statsChart').getContext('2d');
-            const data = {
+            const barData = {
               labels: ['No tutoring','With tutoring'],
               datasets: [
                 { label: 'Pass', data: [6214, 4631], backgroundColor: '#ffb3c6' },
@@ -69,15 +76,57 @@
             };
             new Chart(ctx, {
               type: 'bar',
-              data: data,
+              data: barData,
               options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: { legend: { position: 'top' } },
-                scales: {
-                  x: { stacked: false },
-                  y: { beginAtZero: true, ticks: { precision:0 } }
-                }
+                scales: { x: { stacked: false }, y: { beginAtZero: true, ticks: { precision:0 } } }
+              }
+            });
+
+            // Nested donut chart (inner = tutoring totals, outer = pass/fail breakdown)
+            const donutCtx = document.getElementById('nestedDonut').getContext('2d');
+            const innerTotals = [6214 + 8331, 4631 + 828]; // No tutoring total, With tutoring total
+            const outerBreakdown = [6214, 8331, 4631, 828]; // No-Pass, No-Fail, Yes-Pass, Yes-Fail
+
+            new Chart(donutCtx, {
+              type: 'doughnut',
+              data: {
+                labels: ['No tutoring','With tutoring','No: Pass','No: Fail','With: Pass','With: Fail'],
+                datasets: [
+                  {
+                    label: 'Totals',
+                    data: innerTotals,
+                    backgroundColor: ['#ffd7de','#ffd1e0'],
+                    // draw as inner ring
+                    circumference: 360,
+                    weight: 1
+                  },
+                  {
+                    label: 'Breakdown',
+                    data: outerBreakdown,
+                    backgroundColor: ['#ffb3c6','#f06292','#ffb3e0','#ff93b7'],
+                    // outer ring
+                    weight: 0.5
+                  }
+                ]
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: { position: 'bottom' },
+                  tooltip: {
+                    callbacks: {
+                      label: function(ctx) {
+                        const label = ctx.dataset.label || '';
+                        return label + ': ' + ctx.formattedValue.toString();
+                      }
+                    }
+                  }
+                },
+                cutout: '50%'
               }
             });
           })();
