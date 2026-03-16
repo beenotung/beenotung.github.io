@@ -33,339 +33,370 @@
 
     nav {
       background: linear-gradient(135deg, #FDFBF7 0%, #FFE5D9 100%);
-      padding: 1.5rem 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      box-shadow: 0 2px 10px rgba(74, 60, 47, 0.05);
-    }
-
-    nav ul {
-      display: flex;
-      justify-content: center;
-      list-style: none;
-      gap: 2.5rem;
-      flex-wrap: wrap;
-    }
-
-    nav a {
-      color: var(--text-main);
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 1.1rem;
-      padding: 0.6rem 1.2rem;
-      border-radius: var(--radius-pill);
-      transition: all 0.3s ease;
-    }
-
-    nav a:hover {
-      background: var(--peach-light);
-      color: var(--accent-pink);
-    }
-
-    nav a.active {
-      background: var(--accent-pink);
-      color: white;
-    }
-
-    header {
-      background: linear-gradient(135deg, #FDFBF7 0%, #FFE5D9 100%);
-      padding: 5rem 2rem 3rem;
-      text-align: center;
-    }
-
-    h1 {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 3.4rem;
-      color: #E5739D;
-      margin-bottom: 0.6rem;
-    }
-
-    .tagline {
-      font-size: 1.4rem;
-      color: var(--text-sub);
-      max-width: 760px;
-      margin: 0 auto;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-
-    .section-title {
-      font-family: 'Noto Serif KR', serif;
-      color: #E5739D;
-      font-size: 2.4rem;
-      margin: 3rem 0 2rem;
-      text-align: center;
-    }
-
-    .content-box {
-      background: white;
-      padding: 2.5rem;
-      border-radius: var(--radius-large);
-      box-shadow: var(--shadow-soft);
-      margin: 2rem 0;
-      line-height: 1.8;
-    }
-
-    .content-box h3 {
-      font-family: 'Noto Serif KR', serif;
-      color: var(--accent-pink);
-      font-size: 1.8rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .content-box p {
-      color: var(--text-sub);
-      font-size: 1.1rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .mission-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin: 3rem 0;
-    }
-
-    .mission-card {
-      background: white;
-      padding: 2.5rem 2rem;
-      border-radius: var(--radius-large);
-      box-shadow: var(--shadow-soft);
-      text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      border-top: 5px solid var(--accent-pink);
-    }
-
-    .mission-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 36px rgba(74,60,47,0.12);
-    }
-
-    .mission-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-    }
-
-    .mission-title {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 1.6rem;
-      color: #E5739D;
-      margin-bottom: 1rem;
-    }
-
-    .mission-desc {
-      color: var(--text-sub);
-      font-size: 1.1rem;
-    }
-
-    .team-section {
-      background: white;
-      padding: 2.5rem;
-      border-radius: var(--radius-large);
-      box-shadow: var(--shadow-soft);
-      margin: 2rem 0;
-    }
-
-    .team-member {
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      border-left: 4px solid var(--accent-pink);
-      background: var(--peach-light);
-      border-radius: 8px;
-    }
-
-    .team-member h4 {
-      font-family: 'Noto Serif KR', serif;
-      color: var(--accent-pink);
-      font-size: 1.4rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .team-role {
-      color: var(--accent-mint);
-      font-weight: 600;
-      margin-bottom: 0.8rem;
-    }
-
-    .team-member p {
-      color: var(--text-sub);
-    }
-
-    .highlight {
-      background: var(--peach-light);
-      padding: 2rem;
-      border-radius: var(--radius-large);
-      margin: 2rem 0;
-      border-left: 5px solid var(--accent-pink);
-    }
-
-    .highlight p {
-      font-size: 1.15rem;
-      color: var(--text-main);
-      font-weight: 500;
-    }
-
-    .cta {
-      text-align: center;
-      margin: 4rem 0;
-    }
-
-    .cta-button {
-      background: var(--accent-pink);
-      color: white;
-      border: none;
-      padding: 1.2rem 2.5rem;
-      font-size: 1.2rem;
-      border-radius: var(--radius-pill);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(255,154,181,0.3);
-      text-decoration: none;
-      display: inline-block;
-    }
-
-    .cta-button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 24px rgba(255,154,181,0.4);
-    }
-
-    footer {
-      text-align: center;
-      padding: 2.5rem 1rem;
-      color: var(--text-sub);
-      font-size: 0.95rem;
-      border-top: 1px solid var(--peach-light);
-    }
-
-    @media (max-width: 768px) {
-      h1 { font-size: 2.8rem; }
-      .tagline { font-size: 1.2rem; }
-      nav ul { gap: 1rem; flex-wrap: wrap; }
-      nav a { font-size: 1rem; padding: 0.5rem 1rem; }
-      .section-title { font-size: 2rem; }
-    }
-  </style>
-</head>
-<body>
-
-  <nav>
-    <ul>
-      <li><a href="index.html">首頁</a></li>
-      <li><a href="vocab.html">情境單字學習</a></li>
-      <li><a href="resources.html">資源中心</a></li>
-      <li><a href="how-it-works.html">如何運作</a></li>
-      <li><a href="about-us.html" class="active">關於我們</a></li>
-      <li><a href="contact-us.html">聯絡我們</a></li>
-    </ul>
-  </nav>
-
-  <header>
-    <h1>關於我們</h1>
-    <p class="tagline">K-Learn Hong Kong 的使命是透過創新的 IoT 技術，讓韓語學習融入日常生活。</p>
-  </header>
-
-  <div class="container">
-
-    <div class="content-box">
-      <h3>🎯 我們的故事</h3>
-      <p>K-Learn Hong Kong 誕生於一個簡單的想法：語言學習不應該只侷限於教室或 App。我們相信，當學習與現實環境相結合時，學習效率會顯著提升。透過結合位置感知、QR Code 掃描、NFC 技術和 AI 語音分析，我們創造了一個沉浸式的學習生態系統。</p>
-      <p>作為一個以香港為基地的項目，我們深刻理解粵語使用者在學習韓語時的獨特需求。我們的平台特別設計來利用粵韓發音的相似之處，讓香港學習者能夠更快、更有效地掌握韓語。</p>
-    </div>
-
-    <h2 class="section-title">核心價值觀</h2>
-    <div class="mission-grid">
-
-      <div class="mission-card">
-        <div class="mission-icon">🌍</div>
-        <h3 class="mission-title">包容性</h3>
-        <p class="mission-desc">我們致力於讓韓語學習對所有人都易於接近，無論其背景或學習風格如何。</p>
-      </div>
-
-      <div class="mission-card">
-        <div class="mission-icon">🚀</div>
-        <h3 class="mission-title">創新</h3>
-        <p class="mission-desc">我們持續探索新的技術和教學方法，以提供最先進的學習體驗。</p>
-      </div>
-
-      <div class="mission-card">
-        <div class="mission-icon">❤️</div>
-        <h3 class="mission-title">熱情</h3>
-        <p class="mission-desc">我們對韓語和文化充滿熱情，希望透過我們的平台激發學習者對韓語的熱愛。</p>
-      </div>
-
-      <div class="mission-card">
-        <div class="mission-icon">⚡</div>
-        <h3 class="mission-title">效率</h3>
-        <p class="mission-desc">我們設計每一項功能都以最大化學習效果，讓你的努力獲得最好的回報。</p>
-      </div>
-
-      <div class="mission-card">
-        <div class="mission-icon">🤝</div>
-        <h3 class="mission-title">社群</h3>
-        <p class="mission-desc">我們相信學習最好是在社群中進行。我們建立一個支持性的環境，讓學習者相互鼓勵。</p>
-      </div>
-
-      <div class="mission-card">
-        <div class="mission-icon">🏆</div>
-        <h3 class="mission-title">卓越</h3>
-        <p class="mission-desc">我們追求卓越，不斷改進我們的服務以提供最優質的學習體驗。</p>
-      </div>
-
-    </div>
-
-    <div class="highlight">
-      <p>🌟 K-Learn Hong Kong 是 HKCT（香港創意技術）創新與社會資訊科技項目的一部分，致力於運用科技改善教育。</p>
-    </div>
-
-    <div class="team-section">
-      <h3 style="font-family: 'Noto Serif KR', serif; color: #E5739D; font-size: 2rem; margin-bottom: 2rem; text-align: center;">核心團隊</h3>
+      <!DOCTYPE html>
+      <html lang="zh-Hant">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>關於我們 - K-Learn Hong Kong</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700&family=Pretendard:wght@400;500;600&display=swap" rel="stylesheet">
+        <style>
+          :root {
+            --accent-pink:    #FF9AB5;
+            --accent-mint:    #A8E6CF;
+            --bg-cream:       #FDFBF7;
+            --peach-light:    #FFE5D9;
+            --text-main:      #4A3C2F;
+            --text-sub:       #6B5E4E;
+            --success-blue:   #B2E4FF;
       
-      <div class="team-member">
-        <h4>Beeno Tung</h4>
-        <div class="team-role">👨‍💻 創始人 & 項目主導</div>
-        <p>Beeno 是一位充滿熱情的開發者和教育創新者。他結合了對技術和語言教學的深厚理解，創造了 K-Learn 平台。他相信科技應該被用來增強教育，而不是替代人類的互動。</p>
-      </div>
+            --shadow-soft:    0 6px 20px rgba(74, 60, 47, 0.08);
+            --radius-large:   20px;
+            --radius-pill:    999px;
+          }
 
-      <div class="team-member">
-        <h4>香港創意技術協會</h4>
-        <div class="team-role">🏛️ 支持機構</div>
-        <p>HKCT 是一個致力於推動創新和資訊科技在社會中應用的組織。他們提供資源、指導和支持，幫助 K-Learn 項目蓬勃發展。</p>
-      </div>
+          * { margin:0; padding:0; box-sizing:border-box; }
+          body {
+            font-family: 'Pretendard', system-ui, sans-serif;
+            background: var(--bg-cream);
+            color: var(--text-main);
+            line-height: 1.7;
+            min-height: 100vh;
+          }
 
-    </div>
+          nav {
+            background: linear-gradient(135deg, #FDFBF7 0%, #FFE5D9 100%);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(74, 60, 47, 0.05);
+          }
 
-    <div class="content-box">
-      <h3>🔬 技術基礎</h3>
-      <p>K-Learn 平台利用最新的技術棧，包括：</p>
-      <ul style="margin-left: 1.5rem; color: var(--text-sub); font-size: 1.1rem; margin-top: 1rem;">
-        <li style="margin-bottom: 0.8rem;"><strong>GPS 和地理定位：</strong>精確推送位置相關的學習內容</li>
-        <li style="margin-bottom: 0.8rem;"><strong>QR Code 掃描：</strong>快速訪問互動式教學資源</li>
-        <li style="margin-bottom: 0.8rem;"><strong>NFC 技術：</strong>無接觸式學習卡互動</li>
-        <li style="margin-bottom: 0.8rem;"><strong>機器學習和 AI：</strong>個性化的語音評估和學習路徑</li>
-        <li style="margin-bottom: 0.8rem;"><strong>雲端基礎設施：</strong>確保可靠性和可擴展性</li>
-      </ul>
-    </div>
+          nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+          }
 
-    <h2 class="section-title">我們的願景</h2>
-    <div class="content-box">
-      <p>我們的長期願景是打造一個全球性的、社群驅動的語言學習生態系統。我們計劃擴展到其他語言和地區，同時保持對個性化和創新的承諾。</p>
-      <p>我們相信，透過讓學習變得更有趣、更有效和更易於接近，我們能夠幫助數百萬人發現學習語言的喜悅。</p>
-    </div>
+          nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius-pill);
+            transition: all 0.3s ease;
+          }
 
-    <div class="cta">
-      <a href="contact-us.html" class="cta-button">聯絡我們，加入我們的旅程 →</a>
-    </div>
+          nav a:hover {
+            background: var(--peach-light);
+            color: var(--accent-pink);
+          }
 
-  </div>
+          nav a.active {
+            background: var(--accent-pink);
+            color: white;
+          }
 
-  <footer>
-    <p>© 2026 K-Learn Hong Kong. 將IoT科技融入語言學習，讓每一次相遇都成為練習機會。<br>By Beeno Tung - HKCT Innovation and Information Technology in Society.</p>
-  </footer>
+          header {
+            background: linear-gradient(135deg, #FDFBF7 0%, #FFE5D9 100%);
+            padding: 5rem 2rem 3rem;
+            text-align: center;
+          }
 
-</body>
-</html>
+          h1 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 3.4rem;
+            color: #E5739D;
+            margin-bottom: 0.6rem;
+          }
+
+          .tagline {
+            font-size: 1.4rem;
+            color: var(--text-sub);
+            max-width: 760px;
+            margin: 0 auto;
+          }
+
+          .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+          }
+
+          .section-title {
+            font-family: 'Noto Serif KR', serif;
+            color: #E5739D;
+            font-size: 2.4rem;
+            margin: 3rem 0 2rem;
+            text-align: center;
+          }
+
+          .content-box {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--radius-large);
+            box-shadow: var(--shadow-soft);
+            margin: 2rem 0;
+            line-height: 1.8;
+          }
+
+          .content-box h3 {
+            font-family: 'Noto Serif KR', serif;
+            color: var(--accent-pink);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+          }
+
+          .mission-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+          }
+
+          .mission-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: var(--radius-large);
+            box-shadow: var(--shadow-soft);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 5px solid var(--accent-pink);
+          }
+
+          .mission-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 36px rgba(74,60,47,0.12);
+          }
+
+          .mission-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+          }
+
+          .mission-title {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 1.6rem;
+            color: #E5739D;
+            margin-bottom: 1rem;
+          }
+
+          .mission-desc {
+            color: var(--text-sub);
+            font-size: 1.1rem;
+          }
+
+          .team-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--radius-large);
+            box-shadow: var(--shadow-soft);
+            margin: 2rem 0;
+          }
+
+          .team-member {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--accent-pink);
+            background: var(--peach-light);
+            border-radius: 8px;
+          }
+
+          .team-member h4 {
+            font-family: 'Noto Serif KR', serif;
+            color: var(--accent-pink);
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+          }
+
+          .team-role {
+            color: var(--accent-mint);
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+          }
+
+          .team-member p {
+            color: var(--text-sub);
+          }
+
+          .highlight {
+            background: var(--peach-light);
+            padding: 2rem;
+            border-radius: var(--radius-large);
+            margin: 2rem 0;
+            border-left: 5px solid var(--accent-pink);
+          }
+
+          .highlight p {
+            font-size: 1.15rem;
+            color: var(--text-main);
+            font-weight: 500;
+          }
+
+          .cta {
+            text-align: center;
+            margin: 4rem 0;
+          }
+
+          .cta-button {
+            background: var(--accent-pink);
+            color: white;
+            border: none;
+            padding: 1.2rem 2.5rem;
+            font-size: 1.2rem;
+            border-radius: var(--radius-pill);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(255,154,181,0.3);
+            text-decoration: none;
+            display: inline-block;
+          }
+
+          .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(255,154,181,0.4);
+          }
+
+          footer {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            color: var(--text-sub);
+            font-size: 0.95rem;
+            border-top: 1px solid var(--peach-light);
+          }
+
+          @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; }
+            .tagline { font-size: 1.2rem; }
+            nav ul { gap: 1rem; flex-wrap: wrap; }
+            nav a { font-size: 1rem; padding: 0.5rem 1rem; }
+            .section-title { font-size: 2rem; }
+          }
+        </style>
+      </head>
+      <body>
+
+        <nav>
+          <ul>
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="vocab.html">情境單字學習</a></li>
+            <li><a href="resources.html">資源中心</a></li>
+            <li><a href="stats.html">統計資料</a></li>
+            <li><a href="how-it-works.html">如何運作</a></li>
+            <li><a href="about-us.html" class="active">關於我們</a></li>
+            <li><a href="contact-us.html">聯絡我們</a></li>
+          </ul>
+        </nav>
+
+        <header>
+          <h1>關於我們</h1>
+          <p class="tagline">K-Learn Hong Kong 的使命是透過創新的 IoT 技術，讓韓語學習融入日常生活。</p>
+        </header>
+
+        <div class="container">
+
+          <div class="content-box">
+            <h3>🎯 我們的故事</h3>
+            <p>K-Learn Hong Kong 誕生於一個簡單的想法：語言學習不應該只侷限於教室或 App。我們相信，當學習與現實環境相結合時，學習效率會顯著提升。透過結合位置感知、QR Code 掃描、NFC 技術和 AI 語音分析，我們創造了一個沉浸式的學習生態系統。</p>
+            <p>作為一個以香港為基地的項目，我們深刻理解粵語使用者在學習韓語時的獨特需求。我們的平台特別設計來利用粵韓發音的相似之處，讓香港學習者能夠更快、更有效地掌握韓語。</p>
+          </div>
+
+          <h2 class="section-title">核心價值觀</h2>
+          <div class="mission-grid">
+
+            <div class="mission-card">
+              <div class="mission-icon">🌍</div>
+              <h3 class="mission-title">包容性</h3>
+              <p class="mission-desc">我們致力於讓韓語學習對所有人都易於接近，無論其背景或學習風格如何。</p>
+            </div>
+
+            <div class="mission-card">
+              <div class="mission-icon">🚀</div>
+              <h3 class="mission-title">創新</h3>
+              <p class="mission-desc">我們持續探索新的技術和教學方法，以提供最先進的學習體驗。</p>
+            </div>
+
+            <div class="mission-card">
+              <div class="mission-icon">❤️</div>
+              <h3 class="mission-title">熱情</h3>
+              <p class="mission-desc">我們對韓語和文化充滿熱情，希望透過我們的平台激發學習者對韓語的熱愛。</p>
+            </div>
+
+            <div class="mission-card">
+              <div class="mission-icon">⚡</div>
+              <h3 class="mission-title">效率</h3>
+              <p class="mission-desc">我們設計每一項功能都以最大化學習效果，讓你的努力獲得最好的回報。</p>
+            </div>
+
+            <div class="mission-card">
+              <div class="mission-icon">🤝</div>
+              <h3 class="mission-title">社群</h3>
+              <p class="mission-desc">我們相信學習最好是在社群中進行。我們建立一個支持性的環境，讓學習者相互鼓勵。</p>
+            </div>
+
+            <div class="mission-card">
+              <div class="mission-icon">🏆</div>
+              <h3 class="mission-title">卓越</h3>
+              <p class="mission-desc">我們追求卓越，不斷改進我們的服務以提供最優質的學習體驗。</p>
+            </div>
+
+          </div>
+
+          <div class="highlight">
+            <p>🌟 K-Learn Hong Kong 是 HKCT（香港創意技術）創新與社會資訊科技項目的一部分，致力於運用科技改善教育。</p>
+          </div>
+
+          <div class="team-section">
+            <h3 style="font-family: 'Noto Serif KR', serif; color: #E5739D; font-size: 2rem; margin-bottom: 2rem; text-align: center;">核心團隊</h3>
+      
+            <div class="team-member">
+              <h4>Beeno Tung</h4>
+              <div class="team-role">👨‍💻 創始人 & 項目主導</div>
+              <p>Beeno 是一位充滿熱情的開發者和教育創新者。他結合了對技術和語言教學的深厚理解，創造了 K-Learn 平台。他相信科技應該被用來增強教育，而不是替代人類的互動。</p>
+            </div>
+
+            <div class="team-member">
+              <h4>香港創意技術協會</h4>
+              <div class="team-role">🏛️ 支持機構</div>
+              <p>HKCT 是一個致力於推動創新和資訊科技在社會中應用的組織。他們提供資源、指導和支持，幫助 K-Learn 項目蓬勃發展。</p>
+            </div>
+
+          </div>
+
+          <div class="content-box">
+            <h3>🔬 技術基礎</h3>
+            <p>K-Learn 平台利用最新的技術棧，包括：</p>
+            <ul style="margin-left: 1.5rem; color: var(--text-sub); font-size: 1.1rem; margin-top: 1rem;">
+              <li style="margin-bottom: 0.8rem;"><strong>GPS 和地理定位：</strong>精確推送位置相關的學習內容</li>
+              <li style="margin-bottom: 0.8rem;"><strong>QR Code 掃描：</strong>快速訪問互動式教學資源</li>
+              <li style="margin-bottom: 0.8rem;"><strong>NFC 技術：</strong>無接觸式學習卡互動</li>
+              <li style="margin-bottom: 0.8rem;"><strong>機器學習和 AI：</strong>個性化的語音評估和學習路徑</li>
+              <li style="margin-bottom: 0.8rem;"><strong>雲端基礎設施：</strong>確保可靠性和可擴展性</li>
+            </ul>
+          </div>
+
+          <h2 class="section-title">我們的願景</h2>
+          <div class="content-box">
+            <p>我們的長期願景是打造一個全球性的、社群驅動的語言學習生態系統。我們計劃擴展到其他語言和地區，同時保持對個性化和創新的承諾。</p>
+            <p>我們相信，透過讓學習變得更有趣、更有效和更易於接近，我們能夠幫助數百萬人發現學習語言的喜悅。</p>
+          </div>
+
+          <div class="cta">
+            <a href="contact-us.html" class="cta-button">聯絡我們，加入我們的旅程 →</a>
+          </div>
+
+        </div>
+
+        <footer>
+          <p>© 2026 K-Learn Hong Kong. 將IoT科技融入語言學習，讓每一次相遇都成為練習機會。<br>By Beeno Tung - HKCT Innovation and Information Technology in Society.</p>
+        </footer>
+
+      </body>
+      </html>
+      <li><a href="about-us.html" class="active">關於我們</a></li>

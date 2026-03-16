@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>櫻花森林 - Library</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-start: #fff5f8;
+      --bg-end:   #ffeef2;
+      --primary:  #ff8cab;
+      --primary-dark: #f06292;
+      --accent:   #ffb3c6;
+      --text:     #3a1f2c;
+      --text-light: #5c3f4e;
+      --card-bg:  #ffffff;
+      --shadow:   rgba(255,140,171,0.18);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    nav {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 15px 20px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px var(--shadow);
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--primary);
+    }
+
+    header {
+      text-align: center;
+      padding: 140px 20px 80px;
+      position: relative;
+      margin-top: 60px;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?auto=format&fit=crop&q=80') center/cover;
+      opacity: 0.08;
+      z-index: -1;
+    }
+
+    h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 3.8rem;
+      color: var(--primary);
+      margin: 0 0 20px;
+      text-shadow: 0 4px 15px rgba(255,140,171,0.3);
+    }
+
+    .tagline {
+      font-size: 1.5rem;
+      color: var(--text-light);
+      max-width: 700px;
+      margin: 0 auto 40px;
+    }
+
+    section {
+      padding: 60px 20px;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 2.6rem;
+      color: var(--primary);
+      margin-bottom: 50px;
+      font-weight: 500;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 35px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 35px 28px;
+      box-shadow: 0 10px 30px var(--shadow);
+      border: 1px solid #ffe4ed;
+      transition: all 0.35s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 45px rgba(255,140,171,0.22);
+      border-color: var(--accent);
+    }
+
+    .emoji {
+      font-size: 3.8rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .card h3 {
+      color: var(--primary);
+      margin: 0 0 18px;
+      font-size: 1.6rem;
+      font-weight: 500;
+    }
+
+    .card p {
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .card li {
+      margin: 12px 0;
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .card li::before {
+      content: "•";
+      color: var(--primary);
+      position: absolute;
+      left: 0;
+      font-size: 1.4rem;
+    }
+
+    .resource-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .resource-link:hover {
+      text-decoration: underline;
+    }
+
+    .playlist-embed {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 25px var(--shadow);
+      margin: 40px auto;
+      max-width: 800px;
+    }
+
+    .playlist-embed h3 {
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 450px;
+      border: none;
+      border-radius: 12px;
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 3rem; }
+      h2 { font-size: 2.2rem; }
+      .grid { gap: 25px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="focus-forest.html">Focus Forest</a></li>
+      <li><a href="story-mode.html">Story Mode</a></li>
+      <li><a href="vocabulary-trainer.html">Vocabulary Trainer</a></li>
+      <li><a href="#">My Progress</a></li>
+      <li><a href="#">Culture Lab</a></li>
+      <li><a href="library.html" class="active">Library</a></li>
+      <li><a href="#">IoT / Smart Scan</a></li>
+      <li><a href="#">Account & Settings</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>📚 Library</h1>
+    <div class="tagline">參考資料、學習指南與靈感資源 — 幫助你更深入了解日文與日本文化</div>
+  </header>
+
+  <section>
+    <h2>核心參考資料</h2>
+    <div class="grid">
+      <div class="card">
+        <span class="emoji">🔢</span>
+        <h3>日文數字速查</h3>
+        <p>1–100、日期、時間、計數單位一覽表</p>
+        <ul>
+          <li><a href="#" class="resource-link">數字 1–10 發音 + 寫法</a></li>
+          <li><a href="#" class="resource-link">日期與月份表達</a></li>
+          <li><a href="#" class="resource-link">常見計數詞（本、冊、個…）</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <span class="emoji">🗺️</span>
+        <h3>JLPT N5–N3 學習路線圖</h3>
+        <p>每個級別重點單字、文法、漢字數量與建議進度</p>
+        <ul>
+          <li><a href="#" class="resource-link">N5 必學 100 單字清單</a></li>
+          <li><a href="#" class="resource-link">N4 文法總整理</a></li>
+          <li><a href="#" class="resource-link">N3 漢字 650 字速記表</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <span class="emoji">🎮</span>
+        <h3>常見 Galgame 與動漫用語</h3>
+        <p>在劇情中經常出現的慣用句與表達</p>
+        <ul>
+          <li><a href="#" class="resource-link">戀愛對話常用句</a></li>
+          <li><a href="#" class="resource-link">吐槽與內心OS 經典句型</a></li>
+          <li><a href="#" class="resource-link">校園生活常用詞</a></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <span class="emoji">✈️</span>
+        <h3>日本旅行會話指南</h3>
+        <p>機場、餐廳、購物、問路實用對話</p>
+        <ul>
+          <li><a href="#" class="resource-link">點餐與結帳用語</a></li>
+          <li><a href="#" class="resource-link">交通與方向詢問</a></li>
+          <li><a href="#" class="resource-link">旅館入住對話範例</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>學習播放清單</h2>
+    <div class="playlist-embed">
+      <h3>Japanese Learning (by Beeno)</h3>
+      <iframe 
+        src="https://www.youtube.com/embed/videoseries?list=PLH2rXoLSgZYfABsuQslyCJX3UTKh1E-EU" 
+        title="YouTube playlist" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+      </iframe>
+    </div>
+  </section>
+
+  <section>
+    <h2>進階學習指南</h2>
+    <div class="grid">
+      <div class="card">
+        <span class="emoji">📝</span>
+        <h3>如何準備 JLPT</h3>
+        <p>考試策略、時間分配、推薦教材</p>
+      </div>
+
+      <div class="card">
+        <span class="emoji">📺</span>
+        <h3>用動漫學日文</h3>
+        <p>推薦作品、字幕使用技巧、單字萃取方法</p>
+      </div>
+
+      <div class="card">
+        <span class="emoji">🗣️</span>
+        <h3>提升口說自信</h3>
+        <p>影子跟讀、語言交換、克服尷尬小技巧</p>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
