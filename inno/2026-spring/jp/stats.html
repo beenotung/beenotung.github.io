@@ -46,12 +46,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td>FALSE</td><td>Pass</td><td>6,214</td></tr>
-          <tr><td>FALSE</td><td>Fail</td><td>8,331</td></tr>
-          <tr><td>TRUE</td><td>Pass</td><td>4,631</td></tr>
-          <tr><td>TRUE</td><td>Fail</td><td>828</td></tr>
+          <tr><td>No</td><td>Pass</td><td>6,214</td></tr>
+          <tr><td>No</td><td>Fail</td><td>8,331</td></tr>
+          <tr><td>Yes</td><td>Pass</td><td>4,631</td></tr>
+          <tr><td>Yes</td><td>Fail</td><td>828</td></tr>
         </tbody>
       </table>
+      <p id="stats-desc" class="small">數據說明：`private_tutoring` — No = 沒有私人補習，Yes = 有私人補習。表格與圖表顯示每組的及格（Pass）與不及格（Fail）計數。</p>
         <div style="margin-top:28px">
           <canvas id="statsChart" aria-label="Pass and Fail counts by private tutoring" role="img"></canvas>
         </div>
@@ -60,7 +61,7 @@
           (function(){
             const ctx = document.getElementById('statsChart').getContext('2d');
             const data = {
-              labels: ['FALSE','TRUE'],
+              labels: ['No tutoring','With tutoring'],
               datasets: [
                 { label: 'Pass', data: [6214, 4631], backgroundColor: '#ffb3c6' },
                 { label: 'Fail', data: [8331, 828], backgroundColor: '#f06292' }
