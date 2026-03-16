@@ -85,10 +85,14 @@
             const leftInner = [noPass + noFail, yesPass + yesFail]; // [No tutoring total, With tutoring total]
             const leftOuter = [noPass, noFail, yesPass, yesFail]; // [No:Pass, No:Fail, Yes:Pass, Yes:Fail]
 
+            // Left nested donut: inner labels and outer labels defined separately to avoid mixing
+            const leftInnerLabels = ['No tutoring','With tutoring'];
+            const leftOuterLabels = ['No: Pass','No: Fail','Yes: Pass','Yes: Fail'];
             new Chart(leftCtx, {
               type: 'doughnut',
               data: {
-                labels: ['No tutoring','With tutoring','No: Pass','No: Fail','With: Pass','With: Fail'],
+                // global labels present but not relied on for tooltips
+                labels: leftOuterLabels,
                 datasets: [
                   { data: leftInner, backgroundColor: ['#ffd7de','#ffd1e0'], label: 'Tutoring totals' },
                   { data: leftOuter, backgroundColor: ['#ffb3c6','#f06292','#ffb3e0','#ff93b7'], label: 'Breakdown by Pass/Fail' }
@@ -96,7 +100,18 @@
               },
               options: {
                 responsive:true, maintainAspectRatio:false,
-                plugins:{ legend:{ position:'bottom' }, tooltip:{ callbacks:{ label:function(ctx){ return ctx.label + ': ' + ctx.formattedValue; } } } },
+                plugins:{
+                  legend:{ position:'bottom' },
+                  tooltip:{ callbacks:{
+                    label: function(ctx){
+                      if (ctx.datasetIndex === 0) {
+                        return leftInnerLabels[ctx.dataIndex] + ': ' + ctx.formattedValue;
+                      } else {
+                        return leftOuterLabels[ctx.dataIndex] + ': ' + ctx.formattedValue;
+                      }
+                    }
+                  } }
+                },
                 cutout: '50%'
               }
             });
@@ -107,10 +122,13 @@
             const rightInner = [noPass + yesPass, noFail + yesFail]; // [Pass total, Fail total]
             const rightOuter = [yesPass, noPass, yesFail, noFail]; // [Pass:With, Pass:No, Fail:With, Fail:No]
 
+            // Right nested donut: inner = Pass/Fail, outer = breakdown by tutoring within each outcome
+            const rightInnerLabels = ['Pass','Fail'];
+            const rightOuterLabels = ['Pass: With tutoring','Pass: No tutoring','Fail: With tutoring','Fail: No tutoring'];
             new Chart(rightCtx, {
               type: 'doughnut',
               data: {
-                labels: ['Pass','Fail','Pass: With tutoring','Pass: No tutoring','Fail: With tutoring','Fail: No tutoring'],
+                labels: rightOuterLabels,
                 datasets: [
                   { data: rightInner, backgroundColor: ['#c7ffd9','#ffd7de'], label: 'Outcome totals' },
                   { data: rightOuter, backgroundColor: ['#ffb3e0','#ffb3c6','#ff93b7','#f06292'], label: 'Breakdown by Tutoring' }
@@ -118,7 +136,18 @@
               },
               options: {
                 responsive:true, maintainAspectRatio:false,
-                plugins:{ legend:{ position:'bottom' }, tooltip:{ callbacks:{ label:function(ctx){ return ctx.label + ': ' + ctx.formattedValue; } } } },
+                plugins:{
+                  legend:{ position:'bottom' },
+                  tooltip:{ callbacks:{
+                    label: function(ctx){
+                      if (ctx.datasetIndex === 0) {
+                        return rightInnerLabels[ctx.dataIndex] + ': ' + ctx.formattedValue;
+                      } else {
+                        return rightOuterLabels[ctx.dataIndex] + ': ' + ctx.formattedValue;
+                      }
+                    }
+                  } }
+                },
                 cutout: '50%'
               }
             });
