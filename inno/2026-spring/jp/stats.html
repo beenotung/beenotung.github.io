@@ -52,6 +52,35 @@
           <tr><td>TRUE</td><td>Fail</td><td>828</td></tr>
         </tbody>
       </table>
+        <div style="margin-top:28px">
+          <canvas id="statsChart" aria-label="Pass and Fail counts by private tutoring" role="img"></canvas>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+          (function(){
+            const ctx = document.getElementById('statsChart').getContext('2d');
+            const data = {
+              labels: ['FALSE','TRUE'],
+              datasets: [
+                { label: 'Pass', data: [6214, 4631], backgroundColor: '#ffb3c6' },
+                { label: 'Fail', data: [8331, 828], backgroundColor: '#f06292' }
+              ]
+            };
+            new Chart(ctx, {
+              type: 'bar',
+              data: data,
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'top' } },
+                scales: {
+                  x: { stacked: false },
+                  y: { beginAtZero: true, ticks: { precision:0 } }
+                }
+              }
+            });
+          })();
+        </script>
       <p id="stats-desc" class="small">數據來源：上傳的樣本表格（顯示分組計數）。</p>
     </div>
   </main>
