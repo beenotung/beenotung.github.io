@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>櫻花森林 - Stats</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg-start:#fff5f8;--bg-end:#ffeef2;--primary:#ff8cab;--text:#3a1f2c;--card:#fff;--shadow:rgba(255,140,171,0.18);
+    }
+    body{margin:0;font-family:Roboto, sans-serif;background:linear-gradient(135deg,var(--bg-start),var(--bg-end));color:var(--text);min-height:100vh}
+    nav{background:rgba(255,255,255,0.85);padding:12px 18px;position:fixed;width:100%;top:0;box-shadow:0 2px 8px var(--shadow);z-index:100}
+    nav ul{display:flex;gap:18px;justify-content:center;list-style:none;margin:0;padding:0}
+    nav a{text-decoration:none;color:var(--text);font-weight:500}
+    main{padding:100px 20px;max-width:900px;margin:0 auto}
+    h1{font-family:Poppins, sans-serif;color:var(--primary);font-size:2.6rem;text-align:center}
+    .card{background:var(--card);border-radius:14px;padding:28px;box-shadow:0 12px 30px var(--shadow);margin-top:24px}
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th,td{padding:12px 14px;border-bottom:1px solid #ffe4ed;text-align:left}
+    th{background:#fff0f4;color:var(--primary);font-weight:600}
+    .small{color:#5c3f4e;font-size:0.95rem}
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="focus-forest.html">Focus Forest</a></li>
+      <li><a href="story-mode.html">Story Mode</a></li>
+      <li><a href="vocabulary-trainer.html">Vocabulary Trainer</a></li>
+      <li><a href="library.html">Library</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h1>統計資料</h1>
+    <div class="card">
+      <div class="small">private_tutoring × pass_fail — 觀察樣本數</div>
+      <table aria-describedby="stats-desc">
+        <thead>
+          <tr>
+            <th>private_tutoring</th>
+            <th>pass_fail</th>
+            <th>count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>FALSE</td><td>Pass</td><td>6,214</td></tr>
+          <tr><td>FALSE</td><td>Fail</td><td>8,331</td></tr>
+          <tr><td>TRUE</td><td>Pass</td><td>4,631</td></tr>
+          <tr><td>TRUE</td><td>Fail</td><td>828</td></tr>
+        </tbody>
+      </table>
+      <p id="stats-desc" class="small">數據來源：上傳的樣本表格（顯示分組計數）。</p>
+    </div>
+  </main>
+
+</body>
+</html>
