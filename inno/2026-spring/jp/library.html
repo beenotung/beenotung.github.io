@@ -34,6 +34,18 @@
       top: 0;
       z-index: 1000;
       box-shadow: 0 2px 10px var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text);
     }
 
     nav ul {
@@ -59,16 +71,66 @@
       color: var(--primary);
     }
 
+    .side-menu {
+      display: none;
+    }
+
     @media (max-width: 768px) {
-      nav ul {
-        overflow-x: auto;
-        justify-content: flex-start;
-        padding: 0 10px;
-        gap: 15px;
+      .nav-toggle {
+        display: block;
       }
-      nav a {
-        font-size: 0.95rem;
-        white-space: nowrap;
+      nav ul {
+        display: none;
+      }
+      .side-menu {
+        display: block;
+        position: fixed;
+        top: 60px;
+        right: -100%;
+        width: 70%;
+        max-width: 280px;
+        height: calc(100vh - 60px);
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: -2px 0 10px var(--shadow);
+        transition: right 0.3s ease;
+        padding: 20px;
+        overflow-y: auto;
+      }
+      .side-menu.open {
+        right: 0;
+      }
+      .side-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .side-menu li {
+        margin: 12px 0;
+      }
+      .side-menu a {
+        text-decoration: none;
+        color: var(--text);
+        font-weight: 500;
+        font-size: 1.1rem;
+        display: block;
+        padding: 10px;
+        border-radius: 8px;
+      }
+      .side-menu a:hover {
+        background: var(--accent);
+      }
+      .overlay {
+        display: none;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.3);
+        z-index: 999;
+      }
+      .overlay.show {
+        display: block;
       }
     }
 
@@ -230,9 +292,34 @@
       <li><a href="library.html" class="active">Library</a></li>
       <li><a href="coming-soon.html">IoT / Smart Scan</a></li>
       <li><a href="coming-soon.html">Account & Settings</a></li>
-      <li><a href="coming-soon.html">About</a></li>
+      <li><a href="about-us.html">About</a></li>
     </ul>
+    <button class="nav-toggle" onclick="toggleMenu()">☰</button>
   </nav>
+
+  <div class="overlay" onclick="toggleMenu()"></div>
+  <div class="side-menu">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="focus-forest.html">Focus Forest</a></li>
+      <li><a href="culture-lab.html">Culture Lab</a></li>
+      <li><a href="coming-soon.html">Story Mode</a></li>
+      <li><a href="coming-soon.html">Vocabulary Trainer</a></li>
+      <li><a href="my-progress.html">My Progress</a></li>
+      <li><a href="stats.html">Stats</a></li>
+      <li><a href="library.html">Library</a></li>
+      <li><a href="coming-soon.html">IoT / Smart Scan</a></li>
+      <li><a href="coming-soon.html">Account & Settings</a></li>
+      <li><a href="about-us.html">About</a></li>
+    </ul>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      document.querySelector('.side-menu').classList.toggle('open');
+      document.querySelector('.overlay').classList.toggle('show');
+    }
+  </script>
 
   <header>
     <h1>📚 Library</h1>

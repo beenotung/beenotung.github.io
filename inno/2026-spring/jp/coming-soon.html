@@ -6,19 +6,221 @@
   <title>Coming Soon — 櫻花森林</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
   <style>
-    body{margin:0;font-family:Roboto, sans-serif;background:linear-gradient(135deg,#fff5f8,#ffeef2);color:#3a1f2c;display:flex;align-items:center;justify-content:center;height:100vh}
-    .card{background:#fff;border-radius:14px;padding:28px 36px;box-shadow:0 12px 30px rgba(255,140,171,0.18);text-align:center;max-width:640px}
-    h1{font-family:Poppins, sans-serif;color:#ff8cab;margin:0 0 12px}
-    p{color:#5c3f4e;margin:8px 0}
-    a.button{display:inline-block;margin-top:18px;padding:10px 20px;border-radius:999px;background:#ff8cab;color:#fff;text-decoration:none;font-weight:600}
+    :root {
+      --primary: #ff8cab;
+      --text: #3a1f2c;
+      --shadow: rgba(255, 140, 171, 0.15);
+    }
+
+    nav {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 12px 18px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      box-shadow: 0 2px 8px var(--shadow);
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    nav ul {
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .side-menu {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .nav-toggle {
+        display: block;
+      }
+
+      nav ul {
+        display: none;
+      }
+
+      .side-menu {
+        display: block;
+        position: fixed;
+        top: 50px;
+        left: -100%;
+        width: 70%;
+        max-width: 280px;
+        height: calc(100vh - 50px);
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 2px 0 10px var(--shadow);
+        transition: left 0.3s ease;
+        padding: 20px;
+        overflow-y: auto;
+        z-index: 101;
+      }
+
+      .side-menu.open {
+        left: 0;
+      }
+
+      .side-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .side-menu li {
+        margin: 12px 0;
+      }
+
+      .side-menu a {
+        text-decoration: none;
+        color: var(--text);
+        font-weight: 500;
+        font-size: 1.1rem;
+        display: block;
+        padding: 10px;
+        border-radius: 8px;
+      }
+
+      .side-menu a:hover {
+        background: var(--primary);
+        color: #fff;
+      }
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 50px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 99;
+    }
+
+    .overlay.show {
+      display: block;
+    }
+
+    body {
+      margin: 0;
+      font-family: Roboto, sans-serif;
+      background: linear-gradient(135deg, #fff5f8, #ffeef2);
+      color: #3a1f2c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 28px 36px;
+      box-shadow: 0 12px 30px rgba(255, 140, 171, 0.18);
+      text-align: center;
+      max-width: 640px;
+      margin-top: 60px;
+    }
+
+    h1 {
+      font-family: Poppins, sans-serif;
+      color: #ff8cab;
+      margin: 0 0 12px;
+    }
+
+    p {
+      color: #5c3f4e;
+      margin: 8px 0;
+    }
+
+    a.button {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 10px 20px;
+      border-radius: 999px;
+      background: #ff8cab;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    a.button:hover {
+      background: #ff6b9d;
+    }
   </style>
 </head>
 <body>
+
+  <div class="overlay" onclick="toggleMenu()"></div>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="focus-forest.html">Focus Forest</a></li>
+      <li><a href="culture-lab.html">Culture Lab</a></li>
+      <li><a href="coming-soon.html">Story Mode</a></li>
+      <li><a href="coming-soon.html">Vocabulary Trainer</a></li>
+      <li><a href="my-progress.html">My Progress</a></li>
+      <li><a href="stats.html">Stats</a></li>
+      <li><a href="library.html">Library</a></li>
+      <li><a href="coming-soon.html">IoT / Smart Scan</a></li>
+      <li><a href="coming-soon.html">Account & Settings</a></li>
+      <li><a href="about-us.html">About</a></li>
+    </ul>
+    <button class="nav-toggle" onclick="toggleMenu()">☰</button>
+  </nav>
+
+  <div class="side-menu">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="focus-forest.html">Focus Forest</a></li>
+      <li><a href="culture-lab.html">Culture Lab</a></li>
+      <li><a href="coming-soon.html">Story Mode</a></li>
+      <li><a href="coming-soon.html">Vocabulary Trainer</a></li>
+      <li><a href="my-progress.html">My Progress</a></li>
+      <li><a href="stats.html">Stats</a></li>
+      <li><a href="library.html">Library</a></li>
+      <li><a href="coming-soon.html">IoT / Smart Scan</a></li>
+      <li><a href="coming-soon.html">Account & Settings</a></li>
+      <li><a href="about-us.html">About</a></li>
+    </ul>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      document.querySelector('.side-menu').classList.toggle('open');
+      document.querySelector('.overlay').classList.toggle('show');
+    }
+  </script>
+
   <div class="card">
     <h1>敬請期待</h1>
     <p>這個頁面正在建置中，我們很快會把內容上線。</p>
     <p>如需更多資訊，請稍後回來或從主選單前往其他功能。</p>
     <a class="button" href="index.html">返回首頁</a>
   </div>
+
 </body>
 </html>

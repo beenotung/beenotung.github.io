@@ -1,104 +1,176 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>私たちについて - J-Learn 香港</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>About Us - J-Learn</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --accent-pink:    #FF9AB5;
-      --accent-mint:    #A8E6CF;
-      --bg-cream:       #FDFBF7;
-      --peach-light:    #FFE5D9;
-      --text-main:      #4A3C2F;
-      --text-sub:       #6B5E4E;
-      --success-blue:   #B2E4FF;
-      
-      --shadow-soft:    0 6px 20px rgba(74, 60, 47, 0.08);
-      --radius-large:   20px;
-      --radius-pill:    999px;
+      --bg-start: #fff5f8;
+      --bg-end:   #ffeef2;
+      --primary:  #ff8cab;
+      --primary-dark: #f06292;
+      --accent:   #ffb3c6;
+      --text:     #3a1f2c;
+      --text-light: #5c3f4e;
+      --card-bg:  #ffffff;
+      --shadow:   rgba(255,140,171,0.18);
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      font-family: 'Noto Sans JP', system-ui, sans-serif;
-      background: var(--bg-cream);
-      color: var(--text-main);
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+      color: var(--text);
       line-height: 1.7;
       min-height: 100vh;
     }
 
     nav {
-      background: linear-gradient(135deg, #FDFBF7 0%, #FFE5D9 100%);
-      padding: 1.5rem 2rem;
-      position: sticky;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 15px 20px;
+      position: fixed;
+      width: 100%;
       top: 0;
-      z-index: 10;
-      box-shadow: 0 2px 10px rgba(74, 60, 47, 0.05);
+      z-index: 1000;
+      box-shadow: 0 2px 10px var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text);
     }
 
     nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
       display: flex;
       justify-content: center;
-      list-style: none;
-      gap: 2.5rem;
+      gap: 20px;
       flex-wrap: wrap;
     }
 
     nav a {
-      color: var(--text-main);
       text-decoration: none;
+      color: var(--text);
       font-weight: 500;
       font-size: 1.1rem;
-      padding: 0.6rem 1.2rem;
-      border-radius: var(--radius-pill);
-      transition: all 0.3s ease;
+      transition: color 0.3s ease;
     }
 
     nav a:hover {
-      background: var(--peach-light);
-      color: var(--accent-pink);
-    }
-
-    @media (max-width: 768px) {
-      nav ul {
-        overflow-x: auto;
-        justify-content: flex-start;
-        padding: 0 10px;
-        gap: 15px;
-      }
-      nav a {
-        font-size: 0.95rem;
-        white-space: nowrap;
-      }
+      color: var(--primary);
     }
 
     nav a.active {
-      background: var(--accent-pink);
-      color: white;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .side-menu {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .nav-toggle {
+        display: block;
+      }
+      nav ul {
+        display: none;
+      }
+      .side-menu {
+        display: block;
+        position: fixed;
+        top: 60px;
+        right: -100%;
+        width: 70%;
+        max-width: 280px;
+        height: calc(100vh - 60px);
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: -2px 0 10px var(--shadow);
+        transition: right 0.3s ease;
+        padding: 20px;
+        overflow-y: auto;
+      }
+      .side-menu.open {
+        right: 0;
+      }
+      .side-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .side-menu li {
+        margin: 12px 0;
+      }
+      .side-menu a {
+        text-decoration: none;
+        color: var(--text);
+        font-weight: 500;
+        font-size: 1.1rem;
+        display: block;
+        padding: 10px;
+        border-radius: 8px;
+      }
+      .side-menu a:hover {
+        background: var(--accent);
+      }
+      .overlay {
+        display: none;
+        position: fixed;
+        top: 60px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.3);
+        z-index: 999;
+      }
+      .overlay.show {
+        display: block;
+      }
     }
 
     header {
-      background: linear-gradient(135deg, #FDFBF7 0%, #FFE5D9 100%);
-      padding: 5rem 2rem 3rem;
       text-align: center;
+      padding: 160px 20px 110px;
+      background: linear-gradient(to bottom, rgba(255,179,198,0.22), transparent);
+      position: relative;
+      overflow: hidden;
+      margin-top: 60px;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('https://thumbs.dreamstime.com/b/sakura-tree-branch-petals-falling-butterfly-flying-soft-golden-light-delicate-cherry-blossom-branch-bursts-pink-427921448.jpg') center/cover;
+      opacity: 0.09;
+      z-index: -1;
     }
 
     h1 {
-      font-family: 'Noto Serif JP', serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 3.4rem;
-      color: #E5739D;
-      margin-bottom: 0.6rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 0 0 20px;
+      text-shadow: 0 4px 20px rgba(255,140,171,0.25);
     }
 
     .tagline {
-      font-size: 1.4rem;
-      color: var(--text-sub);
-      max-width: 760px;
-      margin: 0 auto;
+      font-size: 1.65rem;
+      color: var(--text-light);
+      margin-bottom: 50px;
+      font-weight: 400;
     }
 
     .container {
@@ -108,25 +180,27 @@
     }
 
     .section-title {
-      font-family: 'Noto Serif JP', serif;
-      color: #E5739D;
+      font-family: 'Poppins', sans-serif;
+      color: var(--primary);
       font-size: 2.4rem;
       margin: 3rem 0 2rem;
       text-align: center;
+      font-weight: 500;
     }
 
     .content-box {
-      background: white;
+      background: var(--card-bg);
       padding: 2.5rem;
-      border-radius: var(--radius-large);
-      box-shadow: var(--shadow-soft);
+      border-radius: 24px;
+      box-shadow: 0 12px 32px var(--shadow);
       margin: 2rem 0;
       line-height: 1.8;
+      border: 1px solid #ffe4ed;
     }
 
     .content-box h3 {
-      font-family: 'Noto Serif JP', serif;
-      color: var(--accent-pink);
+      font-family: 'Poppins', sans-serif;
+      color: var(--primary);
       font-size: 1.8rem;
       margin-bottom: 1.5rem;
     }
@@ -139,18 +213,20 @@
     }
 
     .mission-card {
-      background: white;
+      background: var(--card-bg);
       padding: 2.5rem 2rem;
-      border-radius: var(--radius-large);
-      box-shadow: var(--shadow-soft);
+      border-radius: 24px;
+      box-shadow: 0 12px 32px var(--shadow);
       text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      border-top: 5px solid var(--accent-pink);
+      transition: all 0.4s ease;
+      border-top: 5px solid var(--primary);
+      border: 1px solid #ffe4ed;
     }
 
     .mission-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 36px rgba(74,60,47,0.12);
+      transform: translateY(-12px);
+      box-shadow: 0 24px 48px rgba(255,140,171,0.25);
+      border-color: var(--accent);
     }
 
     .mission-icon {
@@ -159,36 +235,37 @@
     }
 
     .mission-title {
-      font-family: 'Noto Serif JP', serif;
+      font-family: 'Poppins', sans-serif;
       font-size: 1.6rem;
-      color: #E5739D;
+      color: var(--primary);
       margin-bottom: 1rem;
     }
 
     .mission-desc {
-      color: var(--text-sub);
+      color: var(--text-light);
       font-size: 1.1rem;
     }
 
     .team-section {
-      background: white;
+      background: var(--card-bg);
       padding: 2.5rem;
-      border-radius: var(--radius-large);
-      box-shadow: var(--shadow-soft);
+      border-radius: 24px;
+      box-shadow: 0 12px 32px var(--shadow);
       margin: 2rem 0;
+      border: 1px solid #ffe4ed;
     }
 
     .team-member {
       padding: 1.5rem;
       margin-bottom: 1.5rem;
-      border-left: 4px solid var(--accent-pink);
-      background: var(--peach-light);
+      border-left: 4px solid var(--primary);
+      background: var(--accent);
       border-radius: 8px;
     }
 
     .team-member h4 {
-      font-family: 'Noto Serif JP', serif;
-      color: var(--accent-pink);
+      font-family: 'Poppins', sans-serif;
+      color: var(--primary);
       font-size: 1.4rem;
       margin-bottom: 0.5rem;
     }
@@ -200,20 +277,20 @@
     }
 
     .team-member p {
-      color: var(--text-sub);
+      color: var(--text-light);
     }
 
     .highlight {
-      background: var(--peach-light);
+      background: var(--accent);
       padding: 2rem;
-      border-radius: var(--radius-large);
+      border-radius: 24px;
       margin: 2rem 0;
-      border-left: 5px solid var(--accent-pink);
+      border-left: 5px solid var(--primary);
     }
 
     .highlight p {
       font-size: 1.15rem;
-      color: var(--text-main);
+      color: var(--text);
       font-weight: 500;
     }
 
@@ -223,37 +300,37 @@
     }
 
     .cta-button {
-      background: var(--accent-pink);
+      background: var(--primary);
       color: white;
       border: none;
       padding: 1.2rem 2.5rem;
       font-size: 1.2rem;
-      border-radius: var(--radius-pill);
+      border-radius: 999px;
       cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(255,154,181,0.3);
+      transition: all 0.35s ease;
+      box-shadow: 0 10px 30px var(--shadow);
       text-decoration: none;
       display: inline-block;
+      font-weight: 600;
     }
 
     .cta-button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 24px rgba(255,154,181,0.4);
+      background: var(--primary-dark);
+      transform: translateY(-4px) scale(1.04);
+      box-shadow: 0 16px 40px rgba(240,98,146,0.35);
     }
 
     footer {
       text-align: center;
       padding: 2.5rem 1rem;
-      color: var(--text-sub);
+      color: var(--text-light);
       font-size: 0.95rem;
-      border-top: 1px solid var(--peach-light);
+      border-top: 1px solid var(--accent);
     }
 
     @media (max-width: 768px) {
       h1 { font-size: 2.8rem; }
       .tagline { font-size: 1.2rem; }
-      nav ul { gap: 1rem; flex-wrap: wrap; }
-      nav a { font-size: 1rem; padding: 0.5rem 1rem; }
       .section-title { font-size: 2rem; }
     }
   </style>
@@ -267,116 +344,141 @@
       <li><a href="culture-lab.html">Culture Lab</a></li>
       <li><a href="coming-soon.html">Story Mode</a></li>
       <li><a href="coming-soon.html">Vocabulary Trainer</a></li>
-      <li><a href="coming-soon.html">My Progress</a></li>
+      <li><a href="my-progress.html">My Progress</a></li>
       <li><a href="stats.html">Stats</a></li>
       <li><a href="library.html">Library</a></li>
       <li><a href="coming-soon.html">IoT / Smart Scan</a></li>
       <li><a href="coming-soon.html">Account & Settings</a></li>
       <li><a href="about-us.html" class="active">About</a></li>
     </ul>
+    <button class="nav-toggle" onclick="toggleMenu()">☰</button>
   </nav>
 
+  <div class="overlay" onclick="toggleMenu()"></div>
+  <div class="side-menu">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="focus-forest.html">Focus Forest</a></li>
+      <li><a href="culture-lab.html">Culture Lab</a></li>
+      <li><a href="coming-soon.html">Story Mode</a></li>
+      <li><a href="coming-soon.html">Vocabulary Trainer</a></li>
+      <li><a href="my-progress.html">My Progress</a></li>
+      <li><a href="stats.html">Stats</a></li>
+      <li><a href="library.html">Library</a></li>
+      <li><a href="coming-soon.html">IoT / Smart Scan</a></li>
+      <li><a href="coming-soon.html">Account & Settings</a></li>
+      <li><a href="about-us.html" class="active">About</a></li>
+    </ul>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      document.querySelector('.side-menu').classList.toggle('open');
+      document.querySelector('.overlay').classList.toggle('show');
+    }
+  </script>
+
   <header>
-    <h1>私たちについて</h1>
-    <p class="tagline">J-Learn 香港の使命は、革新的なIoT技術を通じて、日本語学習を日常生活に溶け込ませること。</p>
+    <h1>About Us</h1>
+    <p class="tagline">J-Learn Hong Kong's mission is to integrate Japanese learning into daily life through innovative IoT technology.</p>
   </header>
 
   <div class="container">
 
     <div class="content-box">
-      <h3>🎯 私たちのストーリー</h3>
-      <p>J-Learn 香港はシンプルなアイデアから生まれました：言語学習は教室やアプリに限定されるべきではない。学習を現実の環境と組み合わせることで、学習効率が大幅に向上すると信じています。位置感知、QRコードスキャン、NFC技術、AI音声分析を組み合わせることで、没入型学習エコシステムを作り上げました。</p>
-      <p>香港を拠点とするプロジェクトとして、広東語話者が日本語を学習する際の独自のニーズを深く理解しています。私たちのプラットフォームは、広東語と日本語の発音類似性を活用し、香港の学習者がより速く、より効率的に日本語をマスターできるように特別に設計されています。</p>
+      <h3>🎯 Our Story</h3>
+      <p>J-Learn Hong Kong was born from a simple idea: language learning shouldn't be limited to classrooms or apps. We believe that when learning is combined with real-world environments, learning efficiency improves significantly. By combining location awareness, QR Code scanning, NFC technology, and AI voice analysis, we've created an immersive learning ecosystem.</p>
+      <p>As a Hong Kong-based project, we deeply understand the unique needs of Cantonese speakers learning Japanese. Our platform is specially designed to leverage the similarities between Cantonese and Japanese pronunciation, enabling Hong Kong learners to master Japanese faster and more effectively.</p>
     </div>
 
-    <h2 class="section-title">コアバリュー</h2>
+    <h2 class="section-title">Core Values</h2>
     <div class="mission-grid">
 
       <div class="mission-card">
         <div class="mission-icon">🌍</div>
-        <h3 class="mission-title">包摂性</h3>
-        <p class="mission-desc">日本語学習を、すべての人がアクセシブルになるよう 최선을尽くしています。</p>
+        <h3 class="mission-title">Inclusivity</h3>
+        <p class="mission-desc">We strive to make Japanese learning accessible to everyone, regardless of background or learning style.</p>
       </div>
 
       <div class="mission-card">
         <div class="mission-icon">🚀</div>
-        <h3 class="mission-title">革新</h3>
-        <p class="mission-desc">常に新しい技術と教授法を探索し、最先端の学習体験を提供します。</p>
+        <h3 class="mission-title">Innovation</h3>
+        <p class="mission-desc">We continuously explore new technologies and teaching methods to provide the most advanced learning experience.</p>
       </div>
 
       <div class="mission-card">
         <div class="mission-icon">❤️</div>
-        <h3 class="mission-title">情熱</h3>
-        <p class="mission-desc">日本語と文化への情熱を持ち、プラットフォームを通じて学習者の日本語への愛を引き起こします。</p>
+        <h3 class="mission-title">Passion</h3>
+        <p class="mission-desc">We are passionate about Japanese and culture, hoping to inspire learners' love for Japanese through our platform.</p>
       </div>
 
       <div class="mission-card">
         <div class="mission-icon">⚡</div>
-        <h3 class="mission-title">効率</h3>
-        <p class="mission-desc">すべての機能を学習効果の最大化のために設計し、努力に見合った結果をもたらします。</p>
+        <h3 class="mission-title">Efficiency</h3>
+        <p class="mission-desc">We design every feature to maximize learning effectiveness, ensuring your efforts yield the best results.</p>
       </div>
 
       <div class="mission-card">
         <div class="mission-icon">🤝</div>
-        <h3 class="mission-title">コミュニティ</h3>
-        <p class="mission-desc">学習はコミュニティでこそ最も効果的です。学習者がお互いを励まし合う支援的な環境を作ります。</p>
+        <h3 class="mission-title">Community</h3>
+        <p class="mission-desc">We believe learning is best done in community. We build a supportive environment where learners encourage each other.</p>
       </div>
 
       <div class="mission-card">
         <div class="mission-icon">🏆</div>
-        <h3 class="mission-title">卓越</h3>
-        <p class="mission-desc">卓越を追求し、最高の学習体験を提供するためにサービスを常に改善しています。</p>
+        <h3 class="mission-title">Excellence</h3>
+        <p class="mission-desc">We pursue excellence and constantly improve our services to provide the best learning experience.</p>
       </div>
 
     </div>
 
     <div class="highlight">
-      <p>🌟 J-Learn 香港は HKCT（香港クリエイティブテクノロジー）イノベーション・アンド・情報技術社会プロジェクトの一部であり、テクノロジーを使った教育改善活動に注力しています。</p>
+      <p>🌟 J-Learn Hong Kong is part of HKCT (Hong Kong Creative Technology) Innovation and Information Technology in Society project, dedicated to using technology to improve education.</p>
     </div>
 
     <div class="team-section">
-      <h3 style="font-family: 'Noto Serif JP', serif; color: #E5739D; font-size: 2rem; margin-bottom: 2rem; text-align: center;">コアチーム</h3>
+      <h3 style="font-family: 'Poppins', sans-serif; color: var(--primary); font-size: 2rem; margin-bottom: 2rem; text-align: center;">Core Team</h3>
       
       <div class="team-member">
         <h4>Beeno Tung</h4>
-        <div class="team-role">👨‍💻 創始者 & プロジェクトリーダー</div>
-        <p>Beeno は情熱的な開発者であり、教育イノベーターです。技術と言語教授への深い理解を組み合わせ、J-Learn プラットフォームを生み出しました。テクノロジーは教育を補完するものであり置き換えるものではないと信じています。</p>
+        <div class="team-role">👨‍💻 Founder & Project Lead</div>
+        <p>Beeno is a passionate developer and education innovator. He combined his deep understanding of technology and language teaching to create the J-Learn platform. He believes technology should be used to enhance education, not replace human interaction.</p>
       </div>
 
       <div class="team-member">
-        <h4>香港クリエイティブテクノロジー協会</h4>
-        <div class="team-role">🏛️ サポーティングオーガニゼーション</div>
-        <p>HKCT はイノベーションと情報技術の社会応用を推進することに尽力する組織です。リソースとガイダンス、提供し、J-Learn プロジェクトが成長できるよう支援しています。</p>
+        <h4>Hong Kong Creative Technology Association</h4>
+        <div class="team-role">🏛️ Supporting Organization</div>
+        <p>HKCT is an organization dedicated to promoting innovation and information technology applications in society. They provide resources, guidance, and support to help the J-Learn project thrive.</p>
       </div>
 
     </div>
 
     <div class="content-box">
-      <h3>🔬 技術基盤</h3>
-      <p>J-Learn プラットフォームは、以下の最新技術スタックを活用しています：</p>
-      <ul style="margin-left: 1.5rem; color: var(--text-sub); font-size: 1.1rem; margin-top: 1rem;">
-        <li style="margin-bottom: 0.8rem;"><strong>GPSとジオロケーション：</strong>位置情報を使用した学習コンテンツの正確な配信</li>
-        <li style="margin-bottom: 0.8rem;"><strong>QRコードスキャン：</strong>インタラクティブな教授リソースへの素早いアクセス</li>
-        <li style="margin-bottom: 0.8rem;"><strong>NFC技術：</strong>非接触型の学習カード互动</li>
-        <li style="margin-bottom: 0.8rem;"><strong>機械学習とAI：</strong>パーソナライズされた音声評価と学習パス</li>
-        <li style="margin-bottom: 0.8rem;"><strong>クラウドインフラストラクチャ：</strong>信頼性とスケーラビリティの確保</li>
+      <h3>🔬 Technology Foundation</h3>
+      <p>The J-Learn platform leverages the latest technology stack, including:</p>
+      <ul style="margin-left: 1.5rem; color: var(--text-light); font-size: 1.1rem; margin-top: 1rem;">
+        <li style="margin-bottom: 0.8rem;"><strong>GPS and Geolocation:</strong> Precise delivery of location-based learning content</li>
+        <li style="margin-bottom: 0.8rem;"><strong>QR Code Scanning:</strong> Quick access to interactive teaching resources</li>
+        <li style="margin-bottom: 0.8rem;"><strong>NFC Technology:</strong> Contactless learning card interactions</li>
+        <li style="margin-bottom: 0.8rem;"><strong>Machine Learning and AI:</strong> Personalized voice assessment and learning paths</li>
+        <li style="margin-bottom: 0.8rem;"><strong>Cloud Infrastructure:</strong> Ensuring reliability and scalability</li>
       </ul>
     </div>
 
-    <h2 class="section-title">私たちのビジョン</h2>
+    <h2 class="section-title">Our Vision</h2>
     <div class="content-box">
-      <p>私たちの長期ビジョンは、グローバルでコミュニティ主導の言語学習エコシステムを構築することです。他の言語や地域に展開しつつ、パーソナライズと革新への承诺を維持していきます。</p>
-      <p>学習をより楽しく、より効果的、よりアクセシブルにすることで、何百万人もの人々が言語学習の喜びを発見する手助けができると信じています。</p>
+      <p>Our long-term vision is to build a global, community-driven language learning ecosystem. We plan to expand to other languages and regions while maintaining our commitment to personalization and innovation.</p>
+      <p>We believe that by making learning more fun, more effective, and more accessible, we can help millions of people discover the joy of learning languages.</p>
     </div>
 
     <div class="cta">
-      <a href="coming-soon.html" class="cta-button">お問い合わせいただき、私たちの旅程に参加してください →</a>
+      <a href="coming-soon.html" class="cta-button">Contact Us & Join Our Journey →</a>
     </div>
 
   </div>
 
   <footer>
-    <p>© 2026 J-Learn 香港. IoT技術を言語学習に溶け込ませ、すべての出会いを練習機会に。<br>By Beeno Tung - HKCT Innovation and Information Technology in Society.</p>
+    <p>© 2026 J-Learn Hong Kong. Integrating IoT technology into language learning, making every encounter a practice opportunity.<br>By Beeno Tung - HKCT Innovation and Information Technology in Society.</p>
   </footer>
 
 </body>
