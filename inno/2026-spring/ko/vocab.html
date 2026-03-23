@@ -168,6 +168,30 @@
       font-weight: bold;
       color: var(--text-main);
       margin-bottom: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .speaker-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 50%;
+      transition: all 0.2s ease;
+      opacity: 0.6;
+    }
+
+    .speaker-btn:hover {
+      background: var(--accent-mint);
+      opacity: 1;
+    }
+
+    .speaker-btn.playing {
+      background: var(--accent-mint);
+      animation: pulse 1s infinite;
     }
 
     .vocab-roman {
@@ -181,17 +205,7 @@
       margin: 0.5rem 0;
     }
 
-    .audio-btn {
-      background: var(--accent-mint);
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: var(--radius-pill);
-      cursor: pointer;
-      font-size: 0.95rem;
-      margin-top: 0.6rem;
-      display: inline-block;
-    }
+
 
     .example, .cultural {
       margin-top: 1rem;
@@ -236,7 +250,75 @@
       nav ul { gap: 1.2rem; }
       nav a { font-size: 1rem; padding: 0.5rem 1rem; }
     }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
   </style>
+  <script>
+    function speak(text, btn) {
+      if (!('speechSynthesis' in window)) {
+        alert('您的瀏覽器不支持語音合成功能');
+        return;
+      }
+      
+      window.speechSynthesis.cancel();
+      
+      const getVoices = () => {
+        const voices = window.speechSynthesis.getVoices();
+        let selectedVoice = null;
+        
+        for (const voice of voices) {
+          if (voice.lang.includes('ko')) {
+            selectedVoice = voice;
+            break;
+          }
+        }
+        
+        if (!selectedVoice) {
+          for (const voice of voices) {
+            if (voice.lang.includes('kr') || voice.lang.includes('KR')) {
+              selectedVoice = voice;
+              break;
+            }
+          }
+        }
+        
+        const utterance = new SpeechSynthesisUtterance(text);
+        if (selectedVoice) {
+          utterance.voice = selectedVoice;
+        }
+        utterance.lang = 'ko-KR';
+        utterance.rate = 0.8;
+        
+        btn.classList.add('playing');
+        utterance.onend = () => btn.classList.remove('playing');
+        utterance.onerror = () => btn.classList.remove('playing');
+        
+        window.speechSynthesis.speak(utterance);
+      };
+
+      if (window.speechSynthesis.getVoices().length > 0) {
+        getVoices();
+      } else {
+        window.speechSynthesis.onvoiceschanged = getVoices;
+        setTimeout(() => {
+          if (window.speechSynthesis.getVoices().length === 0) {
+            getVoices();
+          }
+        }, 100);
+      }
+    }
+
+    document.querySelectorAll('.speaker-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const text = btn.getAttribute('data-text');
+        speak(text, btn);
+      });
+    });
+  </script>
 </head>
 <body>
 
@@ -246,9 +328,9 @@
       <li><a href="vocab.html" class="active">情境單字學習</a></li>
       <li><a href="resources.html">資源中心</a></li>
       <li><a href="stats.html">統計資料</a></li>
-      <li><a href="#">如何運作</a></li>
-      <li><a href="#">關於我們</a></li>
-      <li><a href="#">聯絡我們</a></li>
+      <li><a href="how-it-works.html">如何運作</a></li>
+      <li><a href="about-us.html">關於我們</a></li>
+      <li><a href="contact-us.html">聯絡我們</a></li>
     </ul>
   </nav>
 
@@ -271,10 +353,9 @@
           <details open>
             <summary>基本點餐用語</summary>
             <div class="vocab-item">
-              <div class="vocab-korean">주문할게요</div>
+              <div class="vocab-korean">주문할게요 <button class="speaker-btn" data-text="주문할게요">🔊</button></div>
               <div class="vocab-roman">jumunhalgeyo</div>
               <div class="vocab-meaning">我要點餐</div>
-              <button class="audio-btn">▶ 聽發音</button>
               <div class="example">여기 메뉴 주문할게요~ (這裡我要點這個菜單～)</div>
               <div class="cultural">韓國人點餐時常加「～할게요」表達親切與禮貌</div>
             </div>
@@ -283,10 +364,9 @@
           <details>
             <summary>燒烤相關單字</summary>
             <div class="vocab-item">
-              <div class="vocab-korean">삼겹살</div>
+              <div class="vocab-korean">삼겹살 <button class="speaker-btn" data-text="삼겹살">🔊</button></div>
               <div class="vocab-roman">samgyeopsal</div>
               <div class="vocab-meaning">五花肉</div>
-              <button class="audio-btn">▶ 聽發音</button>
             </div>
             <!-- more items can be added -->
           </details>
@@ -302,10 +382,9 @@
           <details open>
             <summary>購物基本對話</summary>
             <div class="vocab-item">
-              <div class="vocab-korean">이거 얼마예요?</div>
+              <div class="vocab-korean">이거 얼마예요? <button class="speaker-btn" data-text="이거 얼마예요?">🔊</button></div>
               <div class="vocab-roman">igeo eolmayeyo?</div>
               <div class="vocab-meaning">這個多少錢？</div>
-              <button class="audio-btn">▶ 聽發音</button>
               <div class="example">이거 좀 할인해 주실 수 있어요? (這個可以打折嗎？)</div>
             </div>
           </details>
@@ -320,10 +399,9 @@
           <details open>
             <summary>粉絲常用短句</summary>
             <div class="vocab-item">
-              <div class="vocab-korean">사랑해요 오빠!</div>
+              <div class="vocab-korean">사랑해요 오빠! <button class="speaker-btn" data-text="사랑해요 오빠!">🔊</button></div>
               <div class="vocab-roman">saranghaeyo oppa!</div>
               <div class="vocab-meaning">愛你哦歐巴！</div>
-              <button class="audio-btn">▶ 聽發音</button>
             </div>
           </details>
         </div>
@@ -337,10 +415,9 @@
           <details open>
             <summary>問路與交通</summary>
             <div class="vocab-item">
-              <div class="vocab-korean">여기서 명동 어떻게 가요?</div>
+              <div class="vocab-korean">여기서 명동 어떻게 가요? <button class="speaker-btn" data-text="여기서 명동 어떻게 가요?">🔊</button></div>
               <div class="vocab-roman">yeogiseo myeongdong eotteoke gayo?</div>
               <div class="vocab-meaning">從這裡怎麼去明洞？</div>
-              <button class="audio-btn">▶ 聽發音</button>
             </div>
           </details>
         </div>
@@ -354,10 +431,9 @@
           <details open>
             <summary>敬語與自我介紹</summary>
             <div class="vocab-item">
-              <div class="vocab-korean">처음 뵙겠습니다</div>
+              <div class="vocab-korean">처음 뵙겠습니다 <button class="speaker-btn" data-text="처음 뵙겠습니다">🔊</button></div>
               <div class="vocab-roman">cheoeum boepgetseumnida</div>
               <div class="vocab-meaning">初次見面（正式）</div>
-              <button class="audio-btn">▶ 聽發音</button>
               <div class="cultural">職場初次見面一定要用正式敬語「습니다」體</div>
             </div>
           </details>

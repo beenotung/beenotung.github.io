@@ -30,8 +30,13 @@
     h1 { font-family: 'Noto Serif KR', serif; color:#E5739D; font-size:2.6rem; }
     .container { max-width:1100px; margin:0 auto; padding:2rem; }
     .chart-card { background:white; padding:1.5rem; border-radius:12px; box-shadow:var(--shadow-soft); }
-    canvas { width:100% !important; height:400px !important; }
+    canvas { width:100% !important; height:auto !important; aspect-ratio: 16/9; }
+    .caption { margin-top:1rem; padding:1rem; background:var(--peach-light); border-radius:8px; font-size:0.95rem; color:var(--text-sub); line-height:1.6; }
     .controls { margin-top:12px; }
+    @media (max-width: 768px) {
+      .chart-card { padding: 1rem; }
+      canvas { aspect-ratio: 4/3; }
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -57,6 +62,7 @@
   <div class="container">
     <div class="chart-card">
       <canvas id="chart"></canvas>
+      <p class="caption">此圖表顯示學生是否接受私人補習與考試結果的關係。紅色代表未通過（Fail），綠色代表通過（Pass）。數據顯示，沒有接受私人補習的學生中，未通過的人數（8227）遠多於通過的人數（6253）；而接受過私人補習的學生中，通過的人數（4725）遠多於未通過的人數（795）。這表明私人補習與考試通過率呈正相關。</p>
       <div class="controls">
         <button id="downloadBtn">下載 PNG</button>
       </div>

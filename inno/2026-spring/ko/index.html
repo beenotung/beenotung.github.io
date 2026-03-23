@@ -70,15 +70,32 @@
 
     /* Header / Hero Section */
     header {
-      background: linear-gradient(135deg, #FDFBF7 0%, #FFE5D9 100%);
-      padding: 6rem 2rem 4rem;
+      background: url('https://images.pexels.com/photos/158001/floral-knife-cherry-blossom-flower-spring-158001.jpeg') 50% 20% / cover no-repeat;
+      padding: 20rem 2rem 4rem;
       text-align: center;
+      position: relative;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.15);
+    }
+
+    .hero-content {
+      position: relative;
+      background: var(--peach-light);
+      display: inline-block;
+      padding: 2rem 3rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
     }
 
     h1 {
       font-family: 'Noto Serif KR', serif;
       font-size: 3.8rem;
-      color: #E5739D; /* brighter pink variant for title */
+      color: var(--text-main);
       margin-bottom: 0.8rem;
     }
 
@@ -222,8 +239,11 @@
 
   <!-- Hero Section -->
   <header>
-    <h1>IoT韓語學習新體驗</h1>
-    <p class="tagline">當你的手機能「看見、聽見、感知」真實世界，學習不再局限於App內。透過位置、QR Code、NFC和AI語音，讓韓語學習融入日常生活！</p>
+    <div class="hero-content">
+      <h1>IoT韓語學習新體驗</h1>
+      <p class="tagline">當你的手機能「看見、聽見、感知」真實世界，學習不再局限於App內。透過位置、QR Code、NFC和AI語音，讓韓語學習融入日常生活！</p>
+    </div>
+    <p style="font-size: 0.8rem; color: white; margin-bottom: 2rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Credit Pixabay@pexels.com</p>
   </header>
 
   <!-- Main Container -->
