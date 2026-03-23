@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>我的學習進度 - 櫻花森林</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-start: #fff5f8;
+      --bg-end: #ffeef2;
+      --primary: #ff8cab;
+      --primary-dark: #f06292;
+      --accent: #ffb3c6;
+      --text: #3a1f2c;
+      --text-light: #5c3f4e;
+      --card-bg: #ffffff;
+      --shadow: rgba(255,140,171,0.18);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    nav {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 12px 18px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      box-shadow: 0 2px 8px var(--shadow);
+      z-index: 100;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    main {
+      padding: 100px 20px 60px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-family: 'Poppins', sans-serif;
+      color: var(--primary);
+      font-size: 2.6rem;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: var(--text-light);
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 8px 24px var(--shadow);
+      border: 1px solid #ffe4ed;
+    }
+
+    .stat-value {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .stat-label {
+      color: var(--text-light);
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 12px 30px var(--shadow);
+      margin-bottom: 24px;
+      border: 1px solid #ffe4ed;
+    }
+
+    .card h2 {
+      font-family: 'Poppins', sans-serif;
+      color: var(--primary);
+      margin: 0 0 20px;
+      font-size: 1.4rem;
+    }
+
+    .chart-container {
+      height: 300px;
+      position: relative;
+    }
+
+    .daily-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    .daily-item {
+      background: linear-gradient(135deg, #fff5f8, #ffeef2);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .daily-item:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .daily-item.today {
+      border-color: var(--primary);
+      background: linear-gradient(135deg, #ffe4ed, #ffd4e3);
+    }
+
+    .daily-date {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+
+    .daily-count {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .daily-label {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    .add-vocab-form {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .add-vocab-form input {
+      padding: 12px 20px;
+      border: 2px solid #ffe4ed;
+      border-radius: 12px;
+      font-size: 1rem;
+      width: 120px;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .add-vocab-form input:focus {
+      border-color: var(--primary);
+    }
+
+    .add-vocab-form button {
+      padding: 12px 28px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .add-vocab-form button:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .demo-notice {
+      text-align: center;
+      background: var(--accent);
+      padding: 12px 20px;
+      border-radius: 10px;
+      margin-bottom: 24px;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="focus-forest.html">Focus Forest</a></li>
+      <li><a href="culture-lab.html">Culture Lab</a></li>
+      <li><a href="coming-soon.html">Story Mode</a></li>
+      <li><a href="coming-soon.html">Vocabulary Trainer</a></li>
+      <li><a href="my-progress.html">My Progress</a></li>
+      <li><a href="stats.html">Stats</a></li>
+      <li><a href="library.html">Library</a></li>
+      <li><a href="coming-soon.html">IoT / Smart Scan</a></li>
+      <li><a href="coming-soon.html">Account & Settings</a></li>
+      <li><a href="about-us.html">About</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h1>📊 我的學習進度</h1>
+    <p class="subtitle">每日新詞彙數量</p>
+
+    <div class="demo-notice">
+      💡 這是示範頁面 - 數據存於本地瀏覽器，可用下方按鈕新增詞彙
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-value" id="totalVocab">0</div>
+        <div class="stat-label">總詞彙量</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="todayCount">0</div>
+        <div class="stat-label">今日新詞彙</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="streakDays">0</div>
+        <div class="stat-label">連續學習天數</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="avgPerDay">0</div>
+        <div class="stat-label">平均每日</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📈 每日學習趨勢 (過去14天)</h2>
+      <div class="chart-container">
+        <canvas id="dailyChart"></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📅 每日詳細記錄</h2>
+      <div class="daily-list" id="dailyList"></div>
+    </div>
+
+    <div class="card">
+      <h2>➕ 測試：用戶學習記錄</h2>
+      <div class="add-vocab-form">
+        <input type="number" id="vocabInput" placeholder="詞彙數" min="0" value="5">
+        <button onclick="addVocab()">新增今日詞彙</button>
+        <button onclick="clearData()" style="background:#ffb3c6">清除數據</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const STORAGE_KEY = 'jp_progress_data';
+
+    function getStorageData() {
+      const data = localStorage.getItem(STORAGE_KEY);
+      if (data) {
+        return JSON.parse(data);
+      }
+      return generateDemoData();
+    }
+
+    function generateDemoData() {
+      const data = {};
+      const today = new Date();
+      for (let i = 29; i >= 0; i--) {
+        const date = new Date(today);
+        date.setDate(date.getDate() - i);
+        const key = formatDate(date);
+        data[key] = Math.floor(Math.random() * 15) + (i < 20 ? 3 : 8);
+      }
+      return data;
+    }
+
+    function formatDate(date) {
+      return date.toISOString().split('T')[0];
+    }
+
+    function saveData(data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function updateStats(data) {
+      const dates = Object.keys(data).sort();
+      const values = dates.map(d => data[d]);
+      
+      const total = values.reduce((a, b) => a + b, 0);
+      const today = formatDate(new Date());
+      const todayVal = data[today] || 0;
+      
+      let streak = 0;
+      let avg = dates.length > 0 ? Math.round(total / dates.length) : 0;
+      
+      for (let i = dates.length - 1; i >= 0; i--) {
+        if (data[dates[i]] > 0) streak++;
+        else break;
+      }
+
+      document.getElementById('totalVocab').textContent = total;
+      document.getElementById('todayCount').textContent = todayVal;
+      document.getElementById('streakDays').textContent = streak;
+      document.getElementById('avgPerDay').textContent = avg;
+    }
+
+    function renderChart(data) {
+      const dates = Object.keys(data).sort().slice(-14);
+      const values = dates.map(d => data[d]);
+      const labels = dates.map(d => {
+        const date = new Date(d);
+        return `${date.getMonth() + 1}/${date.getDate()}`;
+      });
+
+      const ctx = document.getElementById('dailyChart').getContext('2d');
+      if (window.myChart) window.myChart.destroy();
+      
+      window.myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: '新詞彙數量',
+            data: values,
+            backgroundColor: '#ff8cab',
+            borderRadius: 8,
+            borderSkipped: false,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: { color: '#ffe4ed' }
+            },
+            x: {
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    }
+
+    function renderDailyList(data) {
+      const container = document.getElementById('dailyList');
+      const dates = Object.keys(data).sort().reverse().slice(0, 14);
+      const today = formatDate(new Date());
+      
+      container.innerHTML = dates.map(date => {
+        const dateObj = new Date(date);
+        const dayName = ['日', '一', '二', '三', '四', '五', '六'][dateObj.getDay()];
+        const isToday = date === today;
+        return `
+          <div class="daily-item ${isToday ? 'today' : ''}">
+            <div class="daily-date">${dateObj.getMonth() + 1}/${dateObj.getDate()} (${dayName})</div>
+            <div class="daily-count">${data[date]}</div>
+            <div class="daily-label">個新詞彙</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function addVocab() {
+      const input = document.getElementById('vocabInput');
+      const count = parseInt(input.value) || 0;
+      const data = getStorageData();
+      const today = formatDate(new Date());
+      
+      data[today] = (data[today] || 0) + count;
+      saveData(data);
+      refreshPage();
+    }
+
+    function clearData() {
+      if (confirm('確定清除所有數據嗎？')) {
+        localStorage.removeItem(STORAGE_KEY);
+        location.reload();
+      }
+    }
+
+    function refreshPage() {
+      const data = getStorageData();
+      updateStats(data);
+      renderChart(data);
+      renderDailyList(data);
+    }
+
+    refreshPage();
+  </script>
+</body>
+</html>

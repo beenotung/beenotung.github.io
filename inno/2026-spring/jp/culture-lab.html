@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>文化實驗室 - Culture Lab</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-start: #fff5f8;
+      --bg-end:   #ffeef2;
+      --primary:  #ff8cab;
+      --primary-dark: #f06292;
+      --accent:   #ffb3c6;
+      --text:     #3a1f2c;
+      --text-light: #5c3f4e;
+      --card-bg:  #ffffff;
+      --shadow:   rgba(255,140,171,0.18);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    nav {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 15px 20px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px var(--shadow);
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--primary);
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 0 10px;
+        gap: 15px;
+      }
+      nav a {
+        font-size: 0.95rem;
+        white-space: nowrap;
+      }
+    }
+
+    main {
+      padding-top: 100px;
+      text-align: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 3.2rem;
+      color: var(--primary);
+      margin: 40px 0 20px;
+      text-shadow: 0 4px 15px rgba(255,140,171,0.3);
+    }
+
+    .intro {
+      font-size: 1.3rem;
+      color: var(--text-light);
+      margin-bottom: 50px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-bottom: 60px;
+    }
+
+    .category-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px var(--shadow);
+      border: 2px solid var(--accent);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .category-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(255,140,171,0.3);
+      border-color: var(--primary);
+    }
+
+    .category-icon {
+      font-size: 4rem;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .category-card h3 {
+      color: var(--primary);
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.5rem;
+      margin: 10px 0;
+    }
+
+    .category-card p {
+      color: var(--text-light);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .quiz-section {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 50px 40px;
+      margin: 60px auto;
+      max-width: 700px;
+      box-shadow: 0 15px 40px var(--shadow);
+      border: 2px solid var(--accent);
+    }
+
+    .quiz-section h2 {
+      color: var(--primary);
+      font-family: 'Poppins', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+
+    .quiz-question {
+      font-size: 1.4rem;
+      margin-bottom: 30px;
+      color: var(--text);
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .quiz-option {
+      background: var(--bg-start);
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      padding: 18px 25px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: left;
+    }
+
+    .quiz-option:hover {
+      background: var(--accent);
+      border-color: var(--primary);
+    }
+
+    .quiz-option.correct {
+      background: #d4edda;
+      border-color: #28a745;
+    }
+
+    .quiz-option.wrong {
+      background: #f8d7da;
+      border-color: #dc3545;
+    }
+
+    .quiz-feedback {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: 500;
+      min-height: 30px;
+    }
+
+    .quiz-feedback.correct {
+      color: #28a745;
+    }
+
+    .quiz-feedback.wrong {
+      color: #dc3545;
+    }
+
+    .progress-section {
+      margin: 60px auto;
+      max-width: 500px;
+    }
+
+    .progress-section h2 {
+      color: var(--primary);
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+
+    .progress-bar {
+      background: var(--accent);
+      border-radius: 999px;
+      height: 20px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      background: var(--primary);
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.5s ease;
+    }
+
+    .progress-text {
+      margin-top: 10px;
+      color: var(--text-light);
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2.4rem; }
+      .category-grid { grid-template-columns: 1fr; }
+      .quiz-section { padding: 30px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="focus-forest.html">Focus Forest</a></li>
+      <li><a href="culture-lab.html" class="active">Culture Lab</a></li>
+      <li><a href="coming-soon.html">Story Mode</a></li>
+      <li><a href="coming-soon.html">Vocabulary Trainer</a></li>
+      <li><a href="my-progress.html">My Progress</a></li>
+      <li><a href="stats.html">Stats</a></li>
+      <li><a href="library.html">Library</a></li>
+      <li><a href="coming-soon.html">IoT / Smart Scan</a></li>
+      <li><a href="coming-soon.html">Account & Settings</a></li>
+      <li><a href="coming-soon.html">About</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <figure style="margin: 0 auto 30px; max-width: 600px; position: relative;">
+      <img src="https://images.pexels.com/photos/31205514/pexels-photo-31205514.jpeg" alt="Japanese culture" style="width: 100%; height: 420px; object-fit: cover; border-radius: 16px; box-shadow: 0 10px 30px var(--shadow);">
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #fff; background: rgba(0,0,0,0.4); backdrop-filter: blur(4px); padding: 20px 30px; border-radius: 12px;">
+        <h1 style="font-family: 'Poppins', sans-serif; font-size: 2.8rem; margin: 0 0 10px;">🎎 Culture Lab</h1>
+        <p style="font-size: 1.1rem; margin: 0; max-width: 400px;">探索日本文化，從傳統習俗到現代生活。透過互動測驗和小測驗，深入了解日本文化！</p>
+      </div>
+      <figcaption style="position: absolute; bottom: 10px; right: 12px; color: rgba(255,255,255,0.85); font-size: 0.75rem; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">Photo by Viridiana Rivera @pexels.com</figcaption>
+    </figure>
+
+    <div class="category-grid">
+      <div class="category-card" onclick="loadQuiz('etiquette')">
+        <span class="category-icon">🙇</span>
+        <h3>禮儀規範</h3>
+        <p>學習日本的鞠躬、餐桌禮儀、以及日常互動中的重要規範</p>
+      </div>
+
+      <div class="category-card" onclick="loadQuiz('festival')">
+        <span class="category-icon">🎉</span>
+        <h3>節日慶典</h3>
+        <p>探索日本各類傳統節日，包括正月、櫻花季、祭典等</p>
+      </div>
+
+      <div class="category-card" onclick="loadQuiz('food')">
+        <span class="category-icon">🍣</span>
+        <h3>飲食文化</h3>
+        <p>了解日本料理的用餐方式、筷子禮儀以及餐桌文化</p>
+      </div>
+
+      <div class="category-card" onclick="loadQuiz('language')">
+        <span class="category-icon">📝</span>
+        <h3>敬語應用</h3>
+        <p>學習如何使用敬語在不同場合進行適切的溝通</p>
+      </div>
+
+      <div class="category-card" onclick="loadQuiz('customs')">
+        <span class="category-icon">🏯</span>
+        <h3>傳統習俗</h3>
+        <p>認識日本的傳統習俗、儀式以及季節性活動</p>
+      </div>
+
+      <div class="category-card" onclick="loadQuiz('modern')">
+        <span class="category-icon">🌆</span>
+        <h3>現代文化</h3>
+        <p>了解當代日本的生活型態、流行文化以及社會現象</p>
+      </div>
+    </div>
+
+    <section class="quiz-section">
+      <h2>每日文化小測驗</h2>
+      <div class="quiz-question" id="quizQuestion">
+        在日本，使用筷子時，以下哪個行為是錯誤的？
+      </div>
+      <div class="quiz-options" id="quizOptions">
+        <div class="quiz-option" data-correct="false">將筷子橫放在碗上</div>
+        <div class="quiz-option" data-correct="true">將筷子豎直插在飯中</div>
+        <div class="quiz-option" data-correct="false">雙手遞接筷子</div>
+        <div class="quiz-option" data-correct="false">使用筷子尖端夾取食物</div>
+      </div>
+      <div class="quiz-feedback" id="quizFeedback"></div>
+    </section>
+
+    <section class="progress-section">
+      <h2>你的文化探索進度</h2>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 35%;"></div>
+      </div>
+      <p class="progress-text">已完成 <strong id="completedCount">3</strong>/8 個主題</p>
+    </section>
+  </main>
+
+  <script>
+    const quizData = {
+      etiquette: {
+        question: '在日本鞠躬時，哪個角度通常用於一般場合問候？',
+        options: ['15度', '30度', '45度', '90度'],
+        correct: 0
+      },
+      festival: {
+        question: '「櫻花季」在日本的傳統日期大約是什麼時候？',
+        options: ['1月至2月', '3月至4月', '7月至8月', '10月至11月'],
+        correct: 1
+      },
+      food: {
+        question: '在日本餐廳用餐時，應該把味噌湯的碗怎麼放置？',
+        options: ['用雙手拿起來喝', '用嘴巴直接就碗喝', '用湯匙舀來喝', '先將湯倒入碟子再喝'],
+        correct: 0
+      },
+      language: {
+        question: '在日语中，對不認識的人應該使用哪種說話方式？',
+        options: ['常體（ため袋）', '敬體（ます體）', '男性用語', '女性用語'],
+        correct: 1
+      },
+      customs: {
+        question: '進入日本人家中時，應該如何脫鞋？',
+        options: ['保持鞋子正放', '將鞋子轉向門口放置', '隨意放置即可', '大聲脫鞋表示尊重'],
+        correct: 1
+      },
+      modern: {
+        question: '日本的「便當」（お弁當）文化有什麼特色？',
+        options: ['只吃冷的食物', '注重營養均衡和外觀', '只在特殊場合食用', '通常不考慮菜色搭配'],
+        correct: 1
+      }
+    };
+
+    let currentQuiz = null;
+
+    function loadQuiz(category) {
+      currentQuiz = category;
+      const quiz = quizData[category];
+      if (!quiz) return;
+
+      document.getElementById('quizQuestion').textContent = quiz.question;
+      
+      const optionsContainer = document.getElementById('quizOptions');
+      optionsContainer.innerHTML = '';
+      
+      quiz.options.forEach((opt, index) => {
+        const btn = document.createElement('div');
+        btn.className = 'quiz-option';
+        btn.textContent = opt;
+        btn.dataset.correct = index === quiz.correct;
+        btn.addEventListener('click', () => checkAnswer(btn));
+        optionsContainer.appendChild(btn);
+      });
+
+      document.getElementById('quizFeedback').textContent = '';
+    }
+
+    function checkAnswer(selectedBtn) {
+      const isCorrect = selectedBtn.dataset.correct === 'true';
+      const feedback = document.getElementById('quizFeedback');
+      
+      document.querySelectorAll('.quiz-option').forEach(btn => {
+        btn.style.pointerEvents = 'none';
+        if (btn.dataset.correct === 'true') {
+          btn.classList.add('correct');
+        }
+      });
+
+      if (isCorrect) {
+        selectedBtn.classList.add('correct');
+        feedback.textContent = '✓ 正確！太厲害了！';
+        feedback.className = 'quiz-feedback correct';
+      } else {
+        selectedBtn.classList.add('wrong');
+        feedback.textContent = '✗ 不對喔，再想想～';
+        feedback.className = 'quiz-feedback wrong';
+      }
+
+      setTimeout(() => {
+        document.querySelectorAll('.quiz-option').forEach(btn => {
+          btn.style.pointerEvents = 'auto';
+          btn.classList.remove('correct', 'wrong');
+        });
+        feedback.textContent = '';
+      }, 2000);
+    }
+
+    document.querySelectorAll('.quiz-option').forEach(btn => {
+      btn.addEventListener('click', () => checkAnswer(btn));
+    });
+  </script>
+
+</body>
+</html>

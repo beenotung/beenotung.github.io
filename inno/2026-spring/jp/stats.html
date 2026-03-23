@@ -13,6 +13,10 @@
     nav{background:rgba(255,255,255,0.85);padding:12px 18px;position:fixed;width:100%;top:0;box-shadow:0 2px 8px var(--shadow);z-index:100}
     nav ul{display:flex;gap:18px;justify-content:center;list-style:none;margin:0;padding:0}
     nav a{text-decoration:none;color:var(--text);font-weight:500}
+    @media (max-width: 768px) {
+      nav ul{overflow-x:auto;justify-content:flex-start;padding:0 10px;gap:15px}
+      nav a{font-size:0.95rem;white-space:nowrap}
+    }
     main{padding:100px 20px;max-width:900px;margin:0 auto}
     h1{font-family:Poppins, sans-serif;color:var(--primary);font-size:2.6rem;text-align:center}
     .card{background:var(--card);border-radius:14px;padding:28px;box-shadow:0 12px 30px var(--shadow);margin-top:24px}
@@ -32,10 +36,15 @@
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="focus-forest.html">Focus Forest</a></li>
+      <li><a href="culture-lab.html">Culture Lab</a></li>
       <li><a href="coming-soon.html">Story Mode</a></li>
       <li><a href="coming-soon.html">Vocabulary Trainer</a></li>
+      <li><a href="my-progress.html">My Progress</a></li>
       <li><a href="stats.html" class="active">Stats</a></li>
       <li><a href="library.html">Library</a></li>
+      <li><a href="coming-soon.html">IoT / Smart Scan</a></li>
+      <li><a href="coming-soon.html">Account & Settings</a></li>
+      <li><a href="coming-soon.html">About</a></li>
     </ul>
   </nav>
 

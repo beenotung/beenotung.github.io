@@ -60,6 +60,19 @@
       color: var(--primary);
     }
 
+    @media (max-width: 768px) {
+      nav ul {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 0 10px;
+        gap: 15px;
+      }
+      nav a {
+        font-size: 0.95rem;
+        white-space: nowrap;
+      }
+    }
+
     main {
       padding-top: 100px;
       text-align: center;
@@ -228,9 +241,10 @@
     <ul>
       <li><a href="index.html">Home</a></li>
       <li><a href="focus-forest.html" class="active">Focus Forest</a></li>
+      <li><a href="culture-lab.html">Culture Lab</a></li>
       <li><a href="coming-soon.html">Story Mode</a></li>
       <li><a href="coming-soon.html">Vocabulary Trainer</a></li>
-      <li><a href="coming-soon.html">My Progress</a></li>
+      <li><a href="my-progress.html">My Progress</a></li>
         <li><a href="stats.html">Stats</a></li>
       <li><a href="library.html">Library</a></li>
       <li><a href="coming-soon.html">IoT / Smart Scan</a></li>
