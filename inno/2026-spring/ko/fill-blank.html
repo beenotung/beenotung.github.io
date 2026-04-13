@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>填空練習 - K-Learn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&family=Noto+Serif+KR:wght@500;700&family=Pretendard:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent-pink: #FF9AB5;
+      --accent-mint: #A8E6CF;
+      --bg-cream: #FDFBF7;
+      --peach-light: #FFE5D9;
+      --text-main: #4A3C2F;
+      --text-sub: #6B5E4E;
+      --success: #4CAF50;
+      --error: #E57373;
+      --shadow-soft: 0 6px 20px rgba(74, 60, 47, 0.08);
+      --radius-large: 20px;
+      --radius-pill: 999px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Pretendard', system-ui, sans-serif;
+      background: var(--bg-cream);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    nav {
+      background: linear-gradient(135deg, #FDFBF7 0%, #FFE5D9 100%);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 10px rgba(74, 60, 47, 0.05);
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-pill);
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover { background: var(--peach-light); color: var(--accent-pink); }
+    nav a.active { background: var(--accent-pink); color: white; }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .quiz-header {
+      background: white;
+      border-radius: var(--radius-large);
+      padding: 2rem;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .quiz-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 2.2rem;
+      color: #E5739D;
+      margin-bottom: 0.5rem;
+    }
+
+    .quiz-subtitle {
+      color: var(--text-sub);
+      font-size: 1.1rem;
+    }
+
+    .progress-container {
+      background: #eee;
+      border-radius: var(--radius-pill);
+      height: 12px;
+      margin: 1.5rem 0;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      background: linear-gradient(90deg, var(--accent-pink), #E5739D);
+      height: 100%;
+      width: 0%;
+      transition: width 0.4s ease;
+      border-radius: var(--radius-pill);
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .score-display {
+      font-size: 1.1rem;
+      color: var(--text-sub);
+    }
+
+    .quiz-card {
+      background: white;
+      border-radius: var(--radius-large);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .question-text {
+      font-size: 1.3rem;
+      color: var(--text-sub);
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .question-card {
+      background: var(--peach-light);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .korean-word {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 3rem;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .answer-blank {
+      display: inline-flex;
+      align-items: center;
+      min-width: 120px;
+      margin: 0 8px;
+    }
+
+    .answer-input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      font-size: 1.5rem;
+      border: 3px solid transparent;
+      border-radius: 12px;
+      text-align: center;
+      font-family: 'Pretendard', system-ui, sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    .answer-input:focus {
+      outline: none;
+      border-color: var(--accent-pink);
+    }
+
+    .answer-input.correct {
+      background: #C8E6C9;
+      border-color: var(--success);
+      color: #2E7D32;
+    }
+
+    .answer-input.wrong {
+      background: #FFCDD2;
+      border-color: var(--error);
+      color: #C62828;
+    }
+
+    .answer-input.show-answer {
+      background: #FFF3E0;
+      border-color: #FF9800;
+      color: #E65100;
+    }
+
+    .hint-text {
+      font-size: 1.1rem;
+      color: var(--text-sub);
+      margin-top: 1rem;
+      min-height: 1.5rem;
+    }
+
+    .hint-toggle {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background: var(--accent-mint);
+      color: var(--text-main);
+      border: none;
+      border-radius: var(--radius-pill);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .hint-toggle:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(168,230,207,0.4);
+    }
+
+    .hint-toggle.hidden {
+      display: none;
+    }
+
+    .hint-content {
+      display: none;
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #E3F2FD;
+      border-radius: 12px;
+      color: #1565C0;
+      font-size: 1.1rem;
+    }
+
+    .hint-content.show {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .feedback {
+      text-align: center;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      display: none;
+    }
+
+    .feedback.show { display: block; }
+    .feedback.correct { background: #E8F5E9; color: #2E7D32; }
+    .feedback.wrong { background: #FFEBEE; color: #C62828; }
+
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .check-btn {
+      flex: 1;
+      max-width: 200px;
+      padding: 1rem;
+      background: var(--accent-pink);
+      color: white;
+      border: none;
+      border-radius: var(--radius-pill);
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .check-btn:hover:not(:disabled) {
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(255,154,181,0.4);
+    }
+
+    .check-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    .next-btn {
+      flex: 1;
+      max-width: 200px;
+      padding: 1rem;
+      background: var(--accent-mint);
+      color: var(--text-main);
+      border: none;
+      border-radius: var(--radius-pill);
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .next-btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(168,230,207,0.4);
+    }
+
+    .speak-btn {
+      background: var(--accent-mint);
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+      margin-left: 0.5rem;
+    }
+
+    .speak-btn:hover {
+      transform: scale(1.1);
+      background: #92d9bf;
+    }
+
+    .result-screen {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .result-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 2.5rem;
+      color: #E5739D;
+      margin-bottom: 1rem;
+    }
+
+    .result-score {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .result-message {
+      font-size: 1.2rem;
+      color: var(--text-sub);
+      margin: 1rem 0 2rem;
+    }
+
+    .restart-btn {
+      background: var(--accent-mint);
+      color: var(--text-main);
+      border: none;
+      padding: 1rem 2.5rem;
+      font-size: 1.2rem;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .restart-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(168,230,207,0.4);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--peach-light);
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="index.html">首頁</a></li>
+      <li><a href="vocab.html">情境單字學習</a></li>
+      <li><a href="quiz.html">選擇題測驗</a></li>
+      <li><a href="fill-blank.html" class="active">填空練習</a></li>
+      <li><a href="resources.html">資源中心</a></li>
+      <li><a href="stats.html">統計資料</a></li>
+      <li><a href="how-it-works.html">如何運作</a></li>
+      <li><a href="about-us.html">關於我們</a></li>
+      <li><a href="contact-us.html">聯絡我們</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <div class="quiz-header">
+      <h1 class="quiz-title">📝 韓語填空練習</h1>
+      <p class="quiz-subtitle">在空格中填入正確的答案！</p>
+      
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      
+      <div class="stats-row">
+        <div class="score-display">
+          題目 <span id="currentNum">1</span> / <span id="totalNum">10</span>
+        </div>
+        <div class="score-display">
+          分數: <span id="scoreDisplay">0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-card" id="quizCard">
+      <div id="quizContent"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 K-Learn Hong Kong. 將IoT科技融入語言學習。</p>
+  </footer>
+
+  <script>
+    const quizData = [
+      { type: 'number', word: '하나', roman: 'hana', hint: '這是韓語數字 1-10 中的第一個', answer: '一' },
+      { type: 'number', word: '둘', roman: 'dul', hint: '這是韓語數字 1-10 中的第二個', answer: '二' },
+      { type: 'number', word: '셋', roman: 'set', hint: '這是韓語數字 1-10 中的第三個', answer: '三' },
+      { type: 'number', word: '넷', roman: 'net', hint: '這是韓語數字 1-10 中的第四個', answer: '四' },
+      { type: 'number', word: '다섯', roman: 'daseot', hint: '這是韓語數字 1-10 中的第五個', answer: '五' },
+      { type: 'number', word: '여섯', roman: 'yeoseot', hint: '這是韓語數字 1-10 中的第六個', answer: '六' },
+      { type: 'number', word: '일곱', roman: 'ilgop', hint: '這是韓語數字 1-10 中的第七個', answer: '七' },
+      { type: 'number', word: '여덟', roman: 'yeodeol', hint: '這是韓語數字 1-10 中的第八個', answer: '八' },
+      { type: 'number', word: '아홉', roman: 'ahop', hint: '這是韓語數字 1-10 中的第九個', answer: '九' },
+      { type: 'number', word: '열', roman: 'yeol', hint: '這是韓語數字 1-10 中的第十個', answer: '十' },
+      { type: 'color', word: '빨강', roman: 'ppalgang', hint: '這是紅色的韓語', answer: '紅色', color: '#E53935' },
+      { type: 'color', word: '파랑', roman: 'parang', hint: '這是藍色的韓語', answer: '藍色', color: '#1E88E5' },
+      { type: 'color', word: '초록', roman: 'chorok', hint: '這是綠色的韓語', answer: '綠色', color: '#43A047' },
+      { type: 'color', word: '노랑', roman: 'norang', hint: '這是黃色的韓語', answer: '黃色', color: '#FDD835' },
+      { type: 'color', word: '보라', roman: 'bora', hint: '這是紫色的韓語', answer: '紫色', color: '#8E24AA' },
+      { type: 'color', word: '주황', roman: 'juhwang', hint: '這是橙色的韓語', answer: '橙色', color: '#FB8C00' },
+      { type: 'color', word: '분홍', roman: 'bunhong', hint: '這是粉色的韓語', answer: '粉色', color: '#F48FB1' },
+      { type: 'color', word: '하양', roman: 'hayang', hint: '這是白色的韓語', answer: '白色', color: '#FAFAFA' },
+      { type: 'color', word: '검정', roman: 'geomjeong', hint: '這是黑色的韓語', answer: '黑色', color: '#212121' },
+      { type: 'number', word: '스물', roman: 'seumul', hint: '這是韓語數字 20', answer: '二十' },
+    ];
+
+    let currentIndex = 0;
+    let score = 0;
+    let shuffledQuestions = [];
+
+    function shuffle(array) {
+      return [...array].sort(() => Math.random() - 0.5);
+    }
+
+    function initQuiz() {
+      shuffledQuestions = shuffle(quizData).slice(0, 10);
+      currentIndex = 0;
+      score = 0;
+      document.getElementById('totalNum').textContent = shuffledQuestions.length;
+      document.getElementById('scoreDisplay').textContent = score;
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const q = shuffledQuestions[currentIndex];
+      const progress = ((currentIndex) / shuffledQuestions.length) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+      document.getElementById('currentNum').textContent = currentIndex + 1;
+
+      const colorSwatch = q.color ? `<span class="color-swatch" style="background:${q.color};display:inline-block;width:30px;height:30px;border-radius:50%;vertical-align:middle;margin-right:8px;border:2px solid rgba(0,0,0,0.1)"></span>` : '';
+      
+      const content = `
+        <div class="question-text">這個韓語單字是什麼意思？</div>
+        <div class="question-card">
+          <div class="korean-word">
+            ${colorSwatch}${q.word}
+            <button class="speak-btn" onclick="speak('${q.word}')">🔊</button>
+          </div>
+          <div style="color:#6B5E4E;font-size:1.1rem;margin-top:0.5rem">(${q.roman})</div>
+        </div>
+        <div style="text-align:center;font-size:1.5rem;margin:1.5rem 0">
+          ${q.word} = <span class="answer-blank"><input type="text" class="answer-input" id="answerInput" placeholder="請輸入答案" autocomplete="off"></span>
+        </div>
+        <div class="hint-text">
+          <button class="hint-toggle" id="hintBtn" onclick="toggleHint()">💡 顯示提示</button>
+          <div class="hint-content" id="hintContent">${q.hint}</div>
+        </div>
+        <div class="feedback" id="feedback"></div>
+        <div class="action-buttons">
+          <button class="check-btn" id="checkBtn" onclick="checkAnswer()">✓ 檢查答案</button>
+          <button class="next-btn" id="nextBtn" onclick="nextQuestion()" style="display:none">下一題 →</button>
+        </div>
+      `;
+
+      document.getElementById('quizContent').innerHTML = content;
+      
+      document.getElementById('answerInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') checkAnswer();
+      });
+    }
+
+    function speak(text) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'ko-KR';
+      u.rate = 0.8;
+      window.speechSynthesis.speak(u);
+    }
+
+    function toggleHint() {
+      const hintContent = document.getElementById('hintContent');
+      const hintBtn = document.getElementById('hintBtn');
+      if (hintContent.classList.contains('show')) {
+        hintContent.classList.remove('show');
+        hintBtn.textContent = '💡 顯示提示';
+      } else {
+        hintContent.classList.add('show');
+        hintBtn.textContent = '👀 隱藏提示';
+      }
+    }
+
+    function checkAnswer() {
+      const input = document.getElementById('answerInput');
+      const q = shuffledQuestions[currentIndex];
+      const userAnswer = input.value.trim();
+      
+      if (!userAnswer) {
+        alert('請輸入答案');
+        return;
+      }
+
+      const isCorrect = userAnswer === q.answer;
+      const feedback = document.getElementById('feedback');
+      const checkBtn = document.getElementById('checkBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const hintBtn = document.getElementById('hintBtn');
+
+      input.disabled = true;
+      hintBtn.classList.add('hidden');
+      checkBtn.disabled = true;
+
+      if (isCorrect) {
+        input.classList.add('correct');
+        score++;
+        document.getElementById('scoreDisplay').textContent = score;
+        feedback.className = 'feedback show correct';
+        feedback.textContent = '🎉 答對了！';
+      } else {
+        input.classList.add('wrong');
+        feedback.className = 'feedback show wrong';
+        feedback.innerHTML = `答錯了，正確答案是：<strong>${q.answer}</strong>`;
+        
+        setTimeout(() => {
+          input.classList.add('show-answer');
+          input.value = q.answer;
+        }, 500);
+      }
+
+      nextBtn.style.display = 'inline-block';
+    }
+
+    function nextQuestion() {
+      currentIndex++;
+      if (currentIndex < shuffledQuestions.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      const progress = 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+
+      let message = '';
+      if (score === shuffledQuestions.length) message = '💮 完美！你是天才！';
+      else if (score >= shuffledQuestions.length * 0.7) message = '🌟 做得好！繼續加油！';
+      else if (score >= shuffledQuestions.length * 0.5) message = '👍 不錯喔！再練習一下！';
+      else message = '💪 加油！多聽多說就會進步！';
+
+      document.getElementById('quizContent').innerHTML = `
+        <div class="result-screen">
+          <div class="result-title">測驗完成！</div>
+          <div class="result-score">${score} / ${shuffledQuestions.length}</div>
+          <div class="result-message">${message}</div>
+          <button class="restart-btn" onclick="initQuiz()">🔁 再玩一次</button>
+        </div>
+      `;
+    }
+
+    initQuiz();
+  </script>
+</body>
+</html>

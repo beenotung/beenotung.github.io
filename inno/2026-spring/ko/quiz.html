@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>韓語數字與顏色測驗 - K-Learn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&family=Noto+Serif+KR:wght@500;700&family=Pretendard:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent-pink: #FF9AB5;
+      --accent-mint: #A8E6CF;
+      --bg-cream: #FDFBF7;
+      --peach-light: #FFE5D9;
+      --text-main: #4A3C2F;
+      --text-sub: #6B5E4E;
+      --success: #4CAF50;
+      --error: #E57373;
+      --shadow-soft: 0 6px 20px rgba(74, 60, 47, 0.08);
+      --radius-large: 20px;
+      --radius-pill: 999px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Pretendard', system-ui, sans-serif;
+      background: var(--bg-cream);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    nav {
+      background: linear-gradient(135deg, #FDFBF7 0%, #FFE5D9 100%);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 10px rgba(74, 60, 47, 0.05);
+    }
+
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-pill);
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover { background: var(--peach-light); color: var(--accent-pink); }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .quiz-header {
+      background: white;
+      border-radius: var(--radius-large);
+      padding: 2rem;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .quiz-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 2.2rem;
+      color: #E5739D;
+      margin-bottom: 0.5rem;
+    }
+
+    .quiz-subtitle {
+      color: var(--text-sub);
+      font-size: 1.1rem;
+    }
+
+    .progress-container {
+      background: #eee;
+      border-radius: var(--radius-pill);
+      height: 12px;
+      margin: 1.5rem 0;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      background: linear-gradient(90deg, var(--accent-pink), #E5739D);
+      height: 100%;
+      width: 0%;
+      transition: width 0.4s ease;
+      border-radius: var(--radius-pill);
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .timer {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .timer.warning { color: #E57373; }
+    .timer.danger { color: #D32F2F; animation: pulse 0.5s infinite; }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .score-display {
+      font-size: 1.1rem;
+      color: var(--text-sub);
+    }
+
+    .quiz-card {
+      background: white;
+      border-radius: var(--radius-large);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .question {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--text-main);
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .korean-word {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 3rem;
+      color: #E5739D;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .speak-btn {
+      background: var(--accent-mint);
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .speak-btn:hover {
+      transform: scale(1.1);
+      background: #92d9bf;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 600px) {
+      .options-grid { grid-template-columns: 1fr; }
+    }
+
+    .option {
+      background: var(--peach-light);
+      border: 3px solid transparent;
+      border-radius: 12px;
+      padding: 1.2rem;
+      font-size: 1.2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .option:hover {
+      border-color: var(--accent-pink);
+      transform: translateY(-3px);
+    }
+
+    .option.correct {
+      background: #C8E6C9;
+      border-color: var(--success);
+      color: #2E7D32;
+    }
+
+    .option.wrong {
+      background: #FFCDD2;
+      border-color: var(--error);
+      color: #C62828;
+    }
+
+    .option.disabled {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .feedback {
+      text-align: center;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      display: none;
+    }
+
+    .feedback.show { display: block; }
+    .feedback.correct { background: #E8F5E9; color: #2E7D32; }
+    .feedback.wrong { background: #FFEBEE; color: #C62828; }
+
+    .next-btn {
+      display: block;
+      width: 100%;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: var(--accent-pink);
+      color: white;
+      border: none;
+      border-radius: var(--radius-pill);
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .next-btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(255,154,181,0.4);
+    }
+
+    .next-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .result-screen {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .result-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 2.5rem;
+      color: #E5739D;
+      margin-bottom: 1rem;
+    }
+
+    .result-score {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .result-message {
+      font-size: 1.2rem;
+      color: var(--text-sub);
+      margin: 1rem 0 2rem;
+    }
+
+    .restart-btn {
+      background: var(--accent-mint);
+      color: var(--text-main);
+      border: none;
+      padding: 1rem 2.5rem;
+      font-size: 1.2rem;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .restart-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(168,230,207,0.4);
+    }
+
+    .color-swatch {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      vertical-align: middle;
+      margin-right: 8px;
+      border: 2px solid rgba(0,0,0,0.1);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--peach-light);
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="index.html">首頁</a></li>
+      <li><a href="vocab.html">情境單字學習</a></li>
+      <li><a href="quiz.html" class="active">選擇題測驗</a></li>
+      <li><a href="fill-blank.html">填空練習</a></li>
+      <li><a href="resources.html">資源中心</a></li>
+      <li><a href="stats.html">統計資料</a></li>
+      <li><a href="how-it-works.html">如何運作</a></li>
+      <li><a href="about-us.html">關於我們</a></li>
+      <li><a href="contact-us.html">聯絡我們</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <div class="quiz-header">
+      <h1 class="quiz-title">🎯 韓語數字與顏色測驗</h1>
+      <p class="quiz-subtitle">測試你的韓語數字和顏色詞彙！</p>
+      
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      
+      <div class="stats-row">
+        <div class="timer" id="timer">
+          <span>⏱️</span>
+          <span id="timerText">2:00</span>
+        </div>
+        <div class="score-display">
+          題目 <span id="currentNum">1</span> / <span id="totalNum">10</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-card" id="quizCard">
+      <div id="quizContent"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 K-Learn Hong Kong. 將IoT科技融入語言學習。</p>
+  </footer>
+
+  <script>
+    const quizData = [
+      { type: 'number', question: '這個數字怎麼讀？', word: '하나', roman: 'hana', answer: '一', options: ['一', '二', '三', '四'] },
+      { type: 'number', question: '這個數字怎麼讀？', word: '둘', roman: 'dul', answer: '二', options: ['一', '二', '三', '四'] },
+      { type: 'number', question: '這個數字怎麼讀？', word: '셋', roman: 'set', answer: '三', options: ['一', '二', '三', '四'] },
+      { type: 'number', question: '這個數字怎麼讀？', word: '넷', roman: 'net', answer: '四', options: ['一', '二', '三', '四'] },
+      { type: 'number', question: '這個數字怎麼讀？', word: '다섯', roman: 'daseot', answer: '五', options: ['五', '六', '七', '八'] },
+      { type: 'number', question: '這個數字怎麼讀？', word: '여섯', roman: 'yeoseot', answer: '六', options: ['五', '六', '七', '八'] },
+      { type: 'number', question: '這個數字怎麼讀？', word: '일곱', roman: 'ilgop', answer: '七', options: ['五', '六', '七', '八'] },
+      { type: 'number', question: '這個數字怎麼讀？', word: '여덟', roman: 'yeodeol', answer: '八', options: ['五', '六', '七', '八'] },
+      { type: 'number', question: '這個數字怎麼讀？', word: '아홉', roman: 'ahop', answer: '九', options: ['九', '十', '百', '千'] },
+      { type: 'number', question: '這個數字怎麼讀？', word: '열', roman: 'yeol', answer: '十', options: ['九', '十', '百', '千'] },
+      { type: 'color', question: '這個顏色是什麼？', word: '빨강', roman: 'ppalgang', answer: '紅色', color: '#E53935', options: ['紅色', '藍色', '綠色', '黃色'] },
+      { type: 'color', question: '這個顏色是什麼？', word: '파랑', roman: 'parang', answer: '藍色', color: '#1E88E5', options: ['紅色', '藍色', '綠色', '黃色'] },
+      { type: 'color', question: '這個顏色是什麼？', word: '초록', roman: 'chorok', answer: '綠色', color: '#43A047', options: ['紅色', '藍色', '綠色', '黃色'] },
+      { type: 'color', question: '這個顏色是什麼？', word: '노랑', roman: 'norang', answer: '黃色', color: '#FDD835', options: ['紅色', '藍色', '綠色', '黃色'] },
+      { type: 'color', question: '這個顏色是什麼？', word: '보라', roman: 'bora', answer: '紫色', color: '#8E24AA', options: ['紫色', '橙色', '粉色', '白色'] },
+      { type: 'color', question: '這個顏色是什麼？', word: '주황', roman: 'juhwang', answer: '橙色', color: '#FB8C00', options: ['紫色', '橙色', '粉色', '白色'] },
+      { type: 'color', question: '這個顏色是什麼？', word: '분홍', roman: 'bunhong', answer: '粉色', color: '#F48FB1', options: ['紫色', '橙色', '粉色', '白色'] },
+      { type: 'color', question: '這個顏色是什麼？', word: '하양', roman: 'hayang', answer: '白色', color: '#FAFAFA', options: ['紫色', '橙色', '粉色', '白色'] },
+      { type: 'number', question: '這個數字怎麼讀？', word: '스물', roman: 'seumul', answer: '二十', options: ['二十', '三十', '四十', '五十'] },
+      { type: 'number', question: '這個數字怎麼讀？', word: '서른', roman: 'seoreun', answer: '三十', options: ['二十', '三十', '四十', '五十'] },
+    ];
+
+    let currentIndex = 0;
+    let score = 0;
+    let timeLeft = 30;
+    let timerInterval;
+    let shuffledQuestions = [];
+
+    function shuffle(array) {
+      return [...array].sort(() => Math.random() - 0.5);
+    }
+
+    function initQuiz() {
+      shuffledQuestions = shuffle(quizData).slice(0, 10);
+      currentIndex = 0;
+      score = 0;
+      document.getElementById('totalNum').textContent = shuffledQuestions.length;
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const q = shuffledQuestions[currentIndex];
+      const progress = ((currentIndex) / shuffledQuestions.length) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+      document.getElementById('currentNum').textContent = currentIndex + 1;
+
+      resetTimer();
+
+      const wordDisplay = q.type === 'color' 
+        ? `<span class="color-swatch" style="background:${q.color}"></span>${q.word} <span style="font-size:1rem;color:#6B5E4E">(${q.roman})</span>`
+        : `<span style="font-size:2.5rem">${q.word}</span> <span style="font-size:1rem;color:#6B5E4E">(${q.roman})</span>`;
+
+      const content = `
+        <div class="question">${q.question}</div>
+        <div class="korean-word">
+          ${wordDisplay}
+          <button class="speak-btn" onclick="speak('${q.word}')">🔊</button>
+        </div>
+        <div class="options-grid">
+          ${q.options.map((opt, i) => `
+            <div class="option" data-answer="${opt}" onclick="selectOption(this, '${q.answer}')">${opt}</div>
+          `).join('')}
+        </div>
+        <div class="feedback" id="feedback"></div>
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()" disabled>下一題 →</button>
+      `;
+
+      document.getElementById('quizContent').innerHTML = content;
+      startTimer();
+    }
+
+    function speak(text) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'ko-KR';
+      u.rate = 0.8;
+      window.speechSynthesis.speak(u);
+    }
+
+    function startTimer() {
+      timeLeft = 120;
+      updateTimerDisplay();
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          handleTimeUp();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const timerEl = document.getElementById('timer');
+      const timerText = document.getElementById('timerText');
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerText.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+      timerEl.classList.remove('warning', 'danger');
+      if (timeLeft <= 30) timerEl.classList.add('danger');
+      else if (timeLeft <= 60) timerEl.classList.add('warning');
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      document.getElementById('timer').classList.remove('warning', 'danger');
+    }
+
+    function handleTimeUp() {
+      const options = document.querySelectorAll('.option');
+      options.forEach(opt => {
+        opt.classList.add('disabled');
+        if (opt.dataset.answer === shuffledQuestions[currentIndex].answer) {
+          opt.classList.add('correct');
+        }
+      });
+      showFeedback(false, '時間到！', shuffledQuestions[currentIndex].answer);
+      document.getElementById('nextBtn').disabled = false;
+    }
+
+    function selectOption(el, correctAnswer) {
+      clearInterval(timerInterval);
+      const options = document.querySelectorAll('.option');
+      options.forEach(opt => opt.classList.add('disabled'));
+
+      const userAnswer = el.dataset.answer;
+      const isCorrect = userAnswer === correctAnswer;
+
+      if (isCorrect) {
+        el.classList.add('correct');
+        score++;
+        showFeedback(true, '答對了！🎉');
+      } else {
+        el.classList.add('wrong');
+        options.forEach(opt => {
+          if (opt.dataset.answer === correctAnswer) opt.classList.add('correct');
+        });
+        showFeedback(false, '答錯了，正確答案是：', correctAnswer);
+      }
+
+      document.getElementById('nextBtn').disabled = false;
+    }
+
+    function showFeedback(isCorrect, msg, correctAnswer = '') {
+      const fb = document.getElementById('feedback');
+      fb.className = 'feedback show ' + (isCorrect ? 'correct' : 'wrong');
+      fb.innerHTML = isCorrect ? msg : `${msg} ${correctAnswer}`;
+    }
+
+    function nextQuestion() {
+      currentIndex++;
+      if (currentIndex < shuffledQuestions.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      const progress = 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+      resetTimer();
+
+      let message = '';
+      if (score === shuffledQuestions.length) message = '💮 完美！你是天才！';
+      else if (score >= shuffledQuestions.length * 0.7) message = '🌟 做得好！繼續加油！';
+      else if (score >= shuffledQuestions.length * 0.5) message = '👍 不錯喔！再練習一下！';
+      else message = '💪 加油！多聽多說就會進步！';
+
+      document.getElementById('quizContent').innerHTML = `
+        <div class="result-screen">
+          <div class="result-title">測驗完成！</div>
+          <div class="result-score">${score} / ${shuffledQuestions.length}</div>
+          <div class="result-message">${message}</div>
+          <button class="restart-btn" onclick="initQuiz()">🔁 再玩一次</button>
+        </div>
+      `;
+    }
+
+    initQuiz();
+  </script>
+</body>
+</html>
