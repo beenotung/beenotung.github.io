@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>櫻花森林 - Stats</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="menu.css">
   <style>
     :root{
       --bg-start:#fff5f8;--bg-end:#ffeef2;--primary:#ff8cab;--text:#3a1f2c;--card:#fff;--shadow:rgba(255,140,171,0.18);
@@ -42,46 +43,7 @@
   </style>
 </head>
 <body>
-    <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="focus-forest.html">Focus Forest</a></li>
-      <li><a href="culture-lab.html">Culture Lab</a></li>
-      <li><a href="coming-soon.html">Story Mode</a></li>
-      <li><a href="coming-soon.html">Vocabulary Trainer</a></li>
-      <li><a href="my-progress.html">My Progress</a></li>
-      <li><a href="stats.html" class="active">Stats</a></li>
-      <li><a href="library.html">Library</a></li>
-      <li><a href="coming-soon.html">IoT / Smart Scan</a></li>
-      <li><a href="coming-soon.html">Account & Settings</a></li>
-      <li><a href="about-us.html">About</a></li>
-    </ul>
-    <button class="nav-toggle" onclick="toggleMenu()">☰</button>
-  </nav>
-
-  <div class="overlay" onclick="toggleMenu()"></div>
-  <div class="side-menu">
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="focus-forest.html">Focus Forest</a></li>
-      <li><a href="culture-lab.html">Culture Lab</a></li>
-      <li><a href="coming-soon.html">Story Mode</a></li>
-      <li><a href="coming-soon.html">Vocabulary Trainer</a></li>
-      <li><a href="my-progress.html">My Progress</a></li>
-      <li><a href="stats.html">Stats</a></li>
-      <li><a href="library.html">Library</a></li>
-      <li><a href="coming-soon.html">IoT / Smart Scan</a></li>
-      <li><a href="coming-soon.html">Account & Settings</a></li>
-      <li><a href="about-us.html">About</a></li>
-    </ul>
-  </div>
-
-  <script>
-    function toggleMenu() {
-      document.querySelector('.side-menu').classList.toggle('open');
-      document.querySelector('.overlay').classList.toggle('show');
-    }
-  </script>
+  <div id="menu-container"></div>
 
   <main>
     <h1>統計資料</h1>
@@ -162,5 +124,6 @@
     </div>
   </main>
 
+  <script src="menu.js"></script>
 </body>
 </html>
